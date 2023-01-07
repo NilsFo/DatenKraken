@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 using UnityEngine.UIElements;
 
 public class Datenkrake : MonoBehaviour {
@@ -9,7 +10,8 @@ public class Datenkrake : MonoBehaviour {
     public float dampening = 0.1f;
     public float maxSpeed = 10f;
     
-    public float tentakelAcceleration = 0.15f;
+    [FormerlySerializedAs("tentakelAcceleration")]
+    public float tentakelSpeed = 0.15f;
     public float pullSpeed = 20f;
 
     public TentacleInteraction tentakel;
@@ -25,9 +27,11 @@ public class Datenkrake : MonoBehaviour {
     public Collider2D currentAdBox;
 
     private float _z;
+    private Camera _camera;
 
     // Start is called before the first frame update
     void Start() {
+        _camera = Camera.main;
         _tentakelRB = tentakel.GetComponent<Rigidbody2D>();
         gameState = FindObjectOfType<GameState>();
         
@@ -55,13 +59,12 @@ public class Datenkrake : MonoBehaviour {
             if (keyboard.wKey.isPressed) { y += 1; }
             if (keyboard.sKey.isPressed) { y -= 1; }
             
-            if (keyboard.shiftKey.wasPressedThisFrame) {
+            if (keyboard.shiftKey.wasPressedThisFrame || keyboard.spaceKey.wasPressedThisFrame || Mouse.current.leftButton.wasPressedThisFrame) {
                 if (state == KrakenState.WALKING) {
                     StartGrabbing();
-
                 }
             }
-            if (keyboard.shiftKey.wasReleasedThisFrame) {
+            if (keyboard.shiftKey.wasReleasedThisFrame || keyboard.spaceKey.wasReleasedThisFrame || Mouse.current.leftButton.wasReleasedThisFrame) {
                 if (state == KrakenState.GRABBING) {
                     // Try Interact
                     bool interacted = TryInteract();
@@ -169,9 +172,14 @@ public class Datenkrake : MonoBehaviour {
     }
     private void MoveTentakel(Vector2 deltaV) {
         var tentakelPos = _tentakelRB.position;
-        _tentakelRB.MovePosition(tentakelPos + deltaV * tentakelAcceleration);
-        if (deltaV.sqrMagnitude > 0) {
-            //tentakel.MoveRotation(Vector2.Angle(Vector2.right, deltaV));
+        if (Mouse.current.leftButton.isPressed) {
+            
+            _tentakelRB.MovePosition(Vector2.MoveTowards(tentakelPos, _camera.ScreenToWorldPoint(Mouse.current.position.ReadValue()), Time.deltaTime * tentakelSpeed));
+        } else {
+            _tentakelRB.MovePosition(tentakelPos + deltaV * (tentakelSpeed * Time.deltaTime));
+            if (deltaV.sqrMagnitude > 0) {
+                //tentakel.MoveRotation(Vector2.Angle(Vector2.right, deltaV));
+            }
         }
     }
 

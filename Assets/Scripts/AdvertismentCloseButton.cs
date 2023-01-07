@@ -23,10 +23,14 @@ public class AdvertismentCloseButton : MonoBehaviour
     public Sprite spriteHover;
     public Sprite spriteClicked;
 
+    private void Awake()
+    {
+        _gameState = FindObjectOfType<GameState>();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        _gameState = FindObjectOfType<GameState>();
         ResetState();
     }
 
