@@ -49,6 +49,8 @@ MonoBehaviour:
   myChar: 0
   myText: {fileID: 903077651009138080}
   gameState: {fileID: 0}
+  cameraShakeMagnitude: 0.1
+  cameraShakeDuration: 0.08
 --- !u!58 &4660293372151732915
 CircleCollider2D:
   m_ObjectHideFlags: 0

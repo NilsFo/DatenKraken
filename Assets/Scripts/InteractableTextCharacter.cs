@@ -12,6 +12,9 @@ public class InteractableTextCharacter : MonoBehaviour
 
     public GameState gameState;
 
+    public float cameraShakeMagnitude;
+    public float cameraShakeDuration;
+
     private void Awake()
     {
         SetChar('?');
@@ -21,6 +24,7 @@ public class InteractableTextCharacter : MonoBehaviour
     void Start()
     {
         gameState = FindObjectOfType<GameState>();
+        gameState.IncreaseObjectiveTarget();
     }
 
     // Update is called once per frame
@@ -36,11 +40,10 @@ public class InteractableTextCharacter : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        print("Collision with: " + myChar);
         TentacleInteraction tentacleInteraction = other.gameObject.GetComponent<TentacleInteraction>();
         if (tentacleInteraction != null)
         {
-            print("Collision with the player tentacle!");
+            // print("Collision with: " + myChar);
             Collect();
         }
     }
@@ -48,7 +51,13 @@ public class InteractableTextCharacter : MonoBehaviour
     [ContextMenu("Collect me")]
     public void Collect()
     {
-        Debug.Log("Collected!", gameObject);
+        Debug.Log("Collected: '" + myChar + "'!", gameObject);
+        gameState.ShakeCamera(cameraShakeMagnitude, cameraShakeDuration);
         Destroy(gameObject);
+    }
+
+    private void OnDestroy()
+    {
+        gameState.IncreaseObjectiveProgress();
     }
 }

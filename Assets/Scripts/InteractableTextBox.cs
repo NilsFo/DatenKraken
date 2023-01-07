@@ -49,11 +49,8 @@ public class InteractableTextBox : MonoBehaviour
         foreach (char c in textToDisplay.ToCharArray())
         {
             i++;
-            print("Building for: " + c);
-
             if (c.ToString().Trim().Length==0)
             {
-                print("WHITESPACE!");
                 continue;
             }
             
@@ -64,6 +61,5 @@ public class InteractableTextBox : MonoBehaviour
             InteractableTextCharacter textCharacter = newCharacterObj.GetComponent<InteractableTextCharacter>();
             textCharacter.SetChar(c);
         }
-        print("Finished: "+textToDisplay);
     }
 }
