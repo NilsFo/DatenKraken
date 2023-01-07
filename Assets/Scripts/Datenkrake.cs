@@ -23,9 +23,13 @@ public class Datenkrake : MonoBehaviour {
     public Collider2D currentAdBox;
 
     // Start is called before the first frame update
-    void Start()
-    {
-        
+    void Start() {
+        bool success = FindAd(transform.position, out var col);
+        if (success) {
+            currentAdBox = col;
+        } else {
+            Debug.LogError("Datenkrake was not placed on an Ad on start!");
+        }
     }
 
     // Update is called once per frame
