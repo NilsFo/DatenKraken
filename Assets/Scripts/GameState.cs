@@ -17,11 +17,11 @@ public class GameState : MonoBehaviour
     private PlayerState lastKnownState;
 
     public Datenkrake player;
+    public NPCCursorAI cursor;
 
     [Header("Objective")] public int objectiveTarget;
     public int objectiveCurrent;
     public TMP_Text objectiveProgressText;
-
 
     // Camera Shake
     public GameObject CMCameraFocus;
@@ -33,12 +33,13 @@ public class GameState : MonoBehaviour
     {
         playerState = PlayerState.PLAYING;
         lastKnownState = playerState;
+        player = FindObjectOfType<Datenkrake>();
+        cursor = FindObjectOfType<NPCCursorAI>();
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        player = FindObjectOfType<Datenkrake>();
     }
 
     // Update is called once per frame
@@ -49,7 +50,7 @@ public class GameState : MonoBehaviour
             OnGameStateChange();
             lastKnownState = playerState;
         }
-        
+
         // Camera Shake
         if (cameraShakeMagnitude <= 0 || _cameraShakeDurationTimer >= cameraShakeDuration)
         {
@@ -147,5 +148,13 @@ public class GameState : MonoBehaviour
         cameraShakeMagnitude = 0;
         cameraShakeDuration = 0;
         _cameraShakeDurationTimer = 0;
+    }
+
+    public void OnCloseableAdAppeared(AdvertismentCloseButton advertismentCloseButton)
+    {
+        if (cursor != null)
+        {
+            cursor.ResetLookingForButtonTimer();
+        }
     }
 }
