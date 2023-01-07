@@ -19,6 +19,7 @@ public class Datenkrake : MonoBehaviour {
         WALKING, GRABBING, PULLING
     }
     public KrakenState state = KrakenState.WALKING;
+    public GameState gameState;
 
     private Vector2 _velocity;
     public Collider2D currentAdBox;
@@ -26,6 +27,7 @@ public class Datenkrake : MonoBehaviour {
     // Start is called before the first frame update
     void Start() {
         _tentakelRB = tentakel.GetComponent<Rigidbody2D>();
+        gameState = FindObjectOfType<GameState>();
         
         bool success = FindAd(transform.position, out var col);
         if (success) {
@@ -37,7 +39,6 @@ public class Datenkrake : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        
         float x = 0, y = 0;
         Vector3 krakeDeltaV = Vector3.zero;
         Vector3 tentakelDeltaV = Vector3.zero;
@@ -49,7 +50,11 @@ public class Datenkrake : MonoBehaviour {
 
             if (keyboard.wKey.isPressed) { y += 1; }
             if (keyboard.sKey.isPressed) { y -= 1; }
-            
+
+            if (gameState.playerState!= GameState.PlayerState.PLAYING)
+            {
+                // TODO Disable control here?
+            }
             
             if (keyboard.shiftKey.wasPressedThisFrame) {
                 if (state == KrakenState.WALKING) {
