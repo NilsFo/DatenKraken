@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
+using Random = UnityEngine.Random;
 
 public class Datenkrake : MonoBehaviour {
     public float acceleration = 0.1f;
@@ -14,6 +16,7 @@ public class Datenkrake : MonoBehaviour {
 
     public TentacleInteraction tentakel;
     private Rigidbody2D _tentakelRB;
+    private Vector2 originalPosition;
 
     public enum KrakenState {
         WALKING, GRABBING, PULLING
@@ -25,6 +28,11 @@ public class Datenkrake : MonoBehaviour {
     public Collider2D currentAdBox;
 
     private float _z;
+
+    private void OnEnable()
+    {
+        originalPosition = transform.position;
+    }
 
     // Start is called before the first frame update
     void Start() {
@@ -229,4 +237,21 @@ public class Datenkrake : MonoBehaviour {
     public Vector2 GetVelocity() {
         return _velocity;
     }
+
+    public void OnAdvertismentHidden()
+    {
+        bool success = FindAd(transform.position, out var col);
+        if (!success)
+        {
+            Debug.Log("The player was in an ad, that has recently been closed!");
+            gameState.SoftResetLevel();
+        }
+    }
+
+    public void OnSoftReset()
+    {
+        // TODO will this work?
+        transform.position = originalPosition;
+    }
+
 }

@@ -51,6 +51,12 @@ public class NPCCursorAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Checking if game over
+        if (_gameState.playerState == GameState.PlayerState.WIN)
+        {
+            state = AIState.RETURN_HOME;
+        }
+
         // Updating states: Looking for button
         if (state == AIState.LOOKING_FOR_BUTTON)
         {
@@ -267,6 +273,14 @@ public class NPCCursorAI : MonoBehaviour
             ResetLookingForButtonTimer();
             state = AIState.LOOKING_FOR_BUTTON;
             _lookingForButtonTimer = _lookingForButtonTimer / 3.0f;
+        }
+    }
+
+    public void OnSoftReset()
+    {
+        if (state == AIState.LOOKING_FOR_BUTTON || state == AIState.MOVING_TO_BUTTON)
+        {
+            state = AIState.RETURN_HOME;
         }
     }
 
