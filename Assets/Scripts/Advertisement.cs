@@ -18,10 +18,13 @@ public class Advertisement : MonoBehaviour
     public UnityEvent onHideAd;
     public UnityEvent onShowAd;
 
+    private GameState _gameState;
+
     private void OnEnable()
     {
         if (onHideAd == null) onHideAd = new UnityEvent();
         if (onShowAd == null) onShowAd = new UnityEvent();
+        _gameState = FindObjectOfType<GameState>();
     }
 
     // Start is called before the first frame update
@@ -35,8 +38,6 @@ public class Advertisement : MonoBehaviour
         {
             HideAd();
         }
-
-        ChooseNextImg();
     }
 
     // Update is called once per frame
@@ -51,10 +52,14 @@ public class Advertisement : MonoBehaviour
 
     public void DisplayAd()
     {
+        if (!adEnabled)
+        {
+            ChooseNextImg();
+        }
+
         adEnabled = true;
         adCollider.enabled = adEnabled;
         visualization.gameObject.SetActive(adEnabled);
-        ChooseNextImg();
 
         onShowAd.Invoke();
     }
@@ -66,5 +71,16 @@ public class Advertisement : MonoBehaviour
         visualization.gameObject.SetActive(adEnabled);
 
         onHideAd.Invoke();
+
+        // Checking for player
+        _gameState.player.OnAdvertismentHidden();
+    }
+
+    public void OnSoftReset()
+    {
+        if (!adEnabled && enabledOnStart)
+        {
+            DisplayAd();
+        }
     }
 }

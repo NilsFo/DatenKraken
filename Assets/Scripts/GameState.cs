@@ -3,12 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 public class GameState : MonoBehaviour
 {
     public enum PlayerState
     {
+        PAUSED, // TODO USE?
         PLAYING,
         WIN
     }
@@ -23,8 +25,15 @@ public class GameState : MonoBehaviour
     public int objectiveCurrent;
     public TMP_Text objectiveProgressText;
 
+    [Header("Main Menu?")] public float backToMainMenuTimeWindow = 2.0f;
+    private float backToMainMenuTimer = 0;
+    public GameObject backToMenuTF;
+    public bool IsBackToMenuTimeWindow => backToMainMenuTimer > 0;
+
+    [Header("Tutorial")] public bool isTutorialLevel = false;
+
     // Camera Shake
-    public GameObject CMCameraFocus;
+    [Header("Camera Shake")] public GameObject CMCameraFocus;
     public float cameraShakeMagnitude = 0f;
     public float cameraShakeDuration = 0f;
     private float _cameraShakeDurationTimer = 0f;
@@ -40,6 +49,7 @@ public class GameState : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        backToMainMenuTimer = 0;
     }
 
     // Update is called once per frame
@@ -62,6 +72,22 @@ public class GameState : MonoBehaviour
             _cameraShakeDurationTimer += Time.deltaTime;
         }
 
+        // Back To MainMenu
+        backToMainMenuTimer = backToMainMenuTimer - Time.deltaTime;
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Backspace))
+            // TODO input system?
+        {
+            if (IsBackToMenuTimeWindow)
+            {
+                BackToMainMenu();
+            }
+            else
+            {
+                backToMainMenuTimer = backToMainMenuTimeWindow;
+            }
+        }
+
+        backToMenuTF.SetActive(IsBackToMenuTimeWindow);
 
         objectiveProgressText.text = "Data harvested: " + objectiveCurrent + "/" + objectiveTarget;
         if (playerState == PlayerState.PLAYING)
@@ -163,5 +189,22 @@ public class GameState : MonoBehaviour
     public bool ControlsEnabled()
     {
         return playerState == PlayerState.PLAYING;
+    }
+
+    [ContextMenu("Back to Main Menu")]
+    public void BackToMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
+
+    public void SoftResetLevel()
+    {
+        ResetCameraShake();
+
+        SoftResetable[] resetables = FindObjectsOfType<SoftResetable>();
+        foreach (SoftResetable resetable in resetables)
+        {
+            resetable.CallReset();
+        }
     }
 }
