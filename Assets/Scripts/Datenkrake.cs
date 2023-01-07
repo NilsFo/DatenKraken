@@ -59,10 +59,16 @@ public class Datenkrake : MonoBehaviour {
             }
             if (keyboard.shiftKey.wasReleasedThisFrame) {
                 if (state == KrakenState.GRABBING) {
-                    // Try pulling
-                    var canPull = TryPull();
-                    if(!canPull)
+                    // Try Interact
+                    bool interacted = TryInteract();
+                    if(interacted)
                         CancelTentakel();
+                    else {
+                        // Try pulling
+                        var canPull = TryPull();
+                        if (!canPull)
+                            CancelTentakel();
+                    }
                 }
             }
         }
@@ -82,8 +88,17 @@ public class Datenkrake : MonoBehaviour {
             MoveTentakel(tentakelDeltaV);
         } else {
             PullDatenkrakeToTentakel();
+            MoveTentakel(Vector2.zero);
         }
 
+    }
+    private bool TryInteract() {
+        bool success = FindInteractible(tentakel.transform.position, out var btn);
+        if (success) {
+            btn.clickButton.Invoke();
+            Debug.Log("Interacted with button", btn);
+        }
+        return success;
     }
     private void StartGrabbing() {
         _tentakelRB.AddForce(new Vector2(Random.Range(-1f,1f), Random.Range(-1f,1f)).normalized * 200f);
@@ -116,6 +131,23 @@ public class Datenkrake : MonoBehaviour {
             return true;
         } else {
             col2D = null;
+            return false;
+        }
+    }
+    
+    private bool FindInteractible(Vector2 pos, out WebsiteButton btn) {
+        List<Collider2D> results = new List<Collider2D>();
+        var contactFilter2D = new ContactFilter2D {
+            layerMask = LayerMask.GetMask("Interactibles"),
+            useLayerMask = true,
+            useTriggers = true
+        };
+        var count = Physics2D.OverlapPoint(pos, contactFilter2D, results);
+        if (count > 0) {
+            btn = results[0].GetComponent<WebsiteButton>();
+            return true;
+        } else {
+            btn = null;
             return false;
         }
     }
