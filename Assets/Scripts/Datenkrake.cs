@@ -13,6 +13,7 @@ public class Datenkrake : MonoBehaviour {
     public float pullSpeed = 20f;
 
     public Rigidbody2D tentakel;
+    public TentacleInteraction myTentacleInteraction;
 
     public enum KrakenState {
         WALKING, GRABBING, PULLING
