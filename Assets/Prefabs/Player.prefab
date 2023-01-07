@@ -690,7 +690,7 @@ MonoBehaviour:
   acceleration: 0.2
   dampening: 20
   maxSpeed: 5
-  tentakelAcceleration: 0.15
+  tentakelSpeed: 35
   pullSpeed: 15
   tentakel: {fileID: 5199823746954416533}
   state: 0

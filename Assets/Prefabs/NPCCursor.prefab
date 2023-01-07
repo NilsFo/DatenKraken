@@ -51,11 +51,11 @@ MonoBehaviour:
   mySpriteRenderer: {fileID: 4050224675879545977}
   spriteDefault: {fileID: 21300000, guid: 3a674b6320fc70644845755b49b32880, type: 3}
   spriteClick: {fileID: 21300000, guid: 33e0bd73136d76f478b101cbfa0bbe54, type: 3}
-  lookingForButtonDelay: 1.5
+  lookingForButtonDelay: 5
   clickDelay: 0.8
-  clickAnimationDuration: 0.42
+  clickAnimationDuration: 0.3
   lockedOnCloseBT: {fileID: 0}
-  movementSpeed: 5
+  movementSpeed: 10
 --- !u!58 &7296235844067792995
 CircleCollider2D:
   m_ObjectHideFlags: 0

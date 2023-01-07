@@ -11,12 +11,14 @@ public class NPCCursorAI : MonoBehaviour
         LOOKING_FOR_BUTTON,
         MOVING_TO_BUTTON,
         WAITING_TO_CLICK,
+        RETURN_HOME,
         CLICKING
     }
 
     public AIState state;
     private AIState _lastknownState;
     public GameState _gameState;
+    private Vector2 startPos;
 
     [Header("Visuals")] public SpriteRenderer mySpriteRenderer;
     public Sprite spriteDefault;
@@ -40,6 +42,7 @@ public class NPCCursorAI : MonoBehaviour
     void Start()
     {
         _gameState.cursor = this;
+        startPos = transform.position;
         state = AIState.LOOKING_FOR_BUTTON;
         _lastknownState = state;
         ResetLookingForButtonTimer();
@@ -64,20 +67,33 @@ public class NPCCursorAI : MonoBehaviour
         }
 
         // Updating states: Moving
-        if (state == AIState.MOVING_TO_BUTTON)
+        if (state == AIState.MOVING_TO_BUTTON || state == AIState.RETURN_HOME)
         {
             float velocity = movementSpeed * Time.deltaTime;
-            float dist = Vector2.Distance(transform.position, lockedOnCloseBT.transform.position);
+            Vector2 targetPos = lockedOnCloseBT.transform.position;
+            if (state == AIState.RETURN_HOME)
+            {
+                targetPos = startPos;
+            }
 
+            float dist = Vector2.Distance(transform.position, targetPos);
             if (dist < 0.1)
             {
                 // Arrived
-                state = AIState.WAITING_TO_CLICK;
+                if (state == AIState.MOVING_TO_BUTTON)
+                {
+                    state = AIState.WAITING_TO_CLICK;
+                }
+                else if (state == AIState.RETURN_HOME)
+                {
+                    state = AIState.LOOKING_FOR_BUTTON;
+                }
+                else Debug.LogError("Invalid mouse state!!");
             }
             else
             {
                 Vector2 movedPos =
-                    Vector2.MoveTowards(transform.position, lockedOnCloseBT.transform.position, velocity);
+                    Vector2.MoveTowards(transform.position, targetPos, velocity);
                 Vector3 newPos = new Vector3();
                 newPos.x = movedPos.x;
                 newPos.y = movedPos.y;
@@ -193,6 +209,9 @@ public class NPCCursorAI : MonoBehaviour
 
                 break;
             case AIState.LOOKING_FOR_BUTTON:
+                break;
+            case AIState.RETURN_HOME:
+                break;
             default:
                 Debug.LogWarning("UNKNOWN AI CURSOR STATE!");
                 break;
@@ -227,7 +246,7 @@ public class NPCCursorAI : MonoBehaviour
         if (closestBT == null)
         {
             print("Cursor failed. We'll find them next time!");
-            ResetLookingForButtonTimer();
+            state = AIState.RETURN_HOME;
         }
         else
         {
@@ -243,10 +262,11 @@ public class NPCCursorAI : MonoBehaviour
 
     public void RequestInterrupt()
     {
-        if (state == AIState.MOVING_TO_BUTTON)
+        if (state == AIState.RETURN_HOME)
         {
             ResetLookingForButtonTimer();
             state = AIState.LOOKING_FOR_BUTTON;
+            _lookingForButtonTimer = _lookingForButtonTimer / 3.0f;
         }
     }
 
