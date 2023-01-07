@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5829936318398536670}
   - component: {fileID: 9019161587364807060}
   - component: {fileID: 4660293372151732915}
+  - component: {fileID: 2329131132635329117}
   m_Layer: 7
   m_Name: InteractableTextCharater
   m_TagString: Untagged
@@ -67,6 +68,26 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 1.1337
+--- !u!95 &2329131132635329117
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1446464476541852288}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5ca55b5c3c11e234499d1e1e54d4f65d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!1 &6534974061991372828
 GameObject:
   m_ObjectHideFlags: 0
