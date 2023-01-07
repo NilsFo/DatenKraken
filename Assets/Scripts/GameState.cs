@@ -107,6 +107,7 @@ public class GameState : MonoBehaviour
     public void Win()
     {
         playerState = PlayerState.WIN;
+        ResetCameraShake();
     }
 
 
@@ -155,10 +156,12 @@ public class GameState : MonoBehaviour
         if (cursor != null)
         {
             cursor.ResetLookingForButtonTimer();
+            cursor.RequestInterrupt();
         }
     }
 
-    public bool ControlsEnabled() {
+    public bool ControlsEnabled()
+    {
         return playerState == PlayerState.PLAYING;
     }
 }

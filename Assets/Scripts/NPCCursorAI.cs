@@ -161,17 +161,38 @@ public class NPCCursorAI : MonoBehaviour
         ResetLookingForButtonTimer();
         _clickAnimationTimer = 0;
         _clickingDelayTimer = 0;
+
+        AdvertismentCloseButton closeButton = null;
+        if (lockedOnCloseBT != null)
+        {
+            closeButton = lockedOnCloseBT.GetComponent<AdvertismentCloseButton>();
+        }
+
         switch (state)
         {
             case AIState.CLICKING:
                 PerformClick();
+                if (closeButton != null)
+                {
+                    closeButton.state = AdvertismentCloseButton.ClickState.CLICKED;
+                }
+
                 break;
             case AIState.MOVING_TO_BUTTON:
+                if (closeButton != null)
+                {
+                    closeButton.state = AdvertismentCloseButton.ClickState.DEFAULT;
+                }
+
                 break;
             case AIState.WAITING_TO_CLICK:
+                if (closeButton != null)
+                {
+                    closeButton.state = AdvertismentCloseButton.ClickState.HOVER;
+                }
+
                 break;
             case AIState.LOOKING_FOR_BUTTON:
-                break;
             default:
                 Debug.LogWarning("UNKNOWN AI CURSOR STATE!");
                 break;
@@ -220,6 +241,14 @@ public class NPCCursorAI : MonoBehaviour
         _lookingForButtonTimer = 0;
     }
 
+    public void RequestInterrupt()
+    {
+        if (state == AIState.MOVING_TO_BUTTON)
+        {
+            ResetLookingForButtonTimer();
+            state = AIState.LOOKING_FOR_BUTTON;
+        }
+    }
 
     private void OnDrawGizmos()
     {

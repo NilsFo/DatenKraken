@@ -106,6 +106,9 @@ public class Datenkrake : MonoBehaviour {
     private void StartGrabbing() {
         _tentakelRB.AddForce(new Vector2(Random.Range(-1f,1f), Random.Range(-1f,1f)).normalized * 200f);
         state = KrakenState.GRABBING;
+        var tentakelmover = tentakel.GetComponentInParent<TantakelMover>();
+        tentakelmover.active = false;
+        tentakelmover.target.parent = currentAdBox.transform;
     }
     private bool TryPull() {
         if (FindAd(tentakel.transform.position, out var col)) {
@@ -120,6 +123,9 @@ public class Datenkrake : MonoBehaviour {
     private void CancelTentakel() {
 
         state = KrakenState.WALKING;
+        var tentakelmover = tentakel.GetComponentInParent<TantakelMover>();
+        tentakelmover.active = true;
+        tentakelmover.target.parent = currentAdBox.transform;
     }
 
     public bool FindAd(Vector2 pos, out Collider2D col2D) {
@@ -157,7 +163,7 @@ public class Datenkrake : MonoBehaviour {
     private void PullDatenkrakeToTentakel() {
         transform.position = Vector3.MoveTowards(transform.position, tentakel.transform.position, pullSpeed * Time.deltaTime);
         if ((transform.position - tentakel.transform.position).magnitude < 0.1f) {
-            state = KrakenState.WALKING;
+            CancelTentakel();
             _velocity = transform.position - tentakel.transform.position.normalized * acceleration;
         }
     }

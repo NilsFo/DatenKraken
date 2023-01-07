@@ -2066,6 +2066,37 @@ HingeJoint2D:
   m_AngleLimits:
     m_LowerAngle: 0
     m_UpperAngle: 359
+--- !u!1 &6376674612087365195
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8988638518618196034}
+  m_Layer: 0
+  m_Name: target
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8988638518618196034
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6376674612087365195}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 4.58, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4685014763082035355}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7591152858381009605
 GameObject:
   m_ObjectHideFlags: 0
@@ -2160,10 +2191,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4685014763082035355}
+  - component: {fileID: 4199363650676247402}
   m_Layer: 0
   m_Name: GrabTentakel
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 7866945982896999795, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -2184,9 +2216,34 @@ Transform:
   - {fileID: 978324613979032539}
   - {fileID: 978324615666314803}
   - {fileID: 978324614148304453}
+  - {fileID: 8988638518618196034}
   m_Father: {fileID: 978324615740650644}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4199363650676247402
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8384090834979227422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b117e42033b0b2449832d5cc0e9822c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  krake: {fileID: 978324614470270493}
+  endEffector: {fileID: 978324615357068542}
+  target: {fileID: 8988638518618196034}
+  active: 0
+  moveSpeed: 7
+  moveOffset: 0
+  moveInterval: 0.7
+  joints:
+  - {fileID: 978324614361614606}
+  - {fileID: 978324613979032537}
+  - {fileID: 978324615666314801}
+  - {fileID: 978324614148304455}
 --- !u!1 &8437149088285917559
 GameObject:
   m_ObjectHideFlags: 0
@@ -2952,6 +3009,10 @@ PrefabInstance:
     - target: {fileID: 3969836868651400670, guid: f17dccafa89675049b40f2da842bac12, type: 3}
       propertyPath: m_ConnectedAnchor.y
       value: -0.00000004760554
+      objectReference: {fileID: 0}
+    - target: {fileID: 5784779203863719197, guid: f17dccafa89675049b40f2da842bac12, type: 3}
+      propertyPath: m_ConnectedAnchor.x
+      value: -0.48999977
       objectReference: {fileID: 0}
     - target: {fileID: 5784779203863719197, guid: f17dccafa89675049b40f2da842bac12, type: 3}
       propertyPath: m_ConnectedAnchor.y
