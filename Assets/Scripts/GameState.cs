@@ -32,6 +32,10 @@ public class GameState : MonoBehaviour
 
     [Header("Tutorial")] public bool isTutorialLevel = false;
 
+    [Header("Music")] public GameObject musicManagerPrefab;
+    public MusicManager musicManager;
+    public MusicManager.MusicProfile levelMusicProfile = MusicManager.MusicProfile.SILENCE;
+
     // Camera Shake
     [Header("Camera Shake")] public GameObject CMCameraFocus;
     public float cameraShakeMagnitude = 0f;
@@ -50,6 +54,7 @@ public class GameState : MonoBehaviour
     void Start()
     {
         backToMainMenuTimer = 0;
+        SetupMusic();
     }
 
     // Update is called once per frame
@@ -206,5 +211,17 @@ public class GameState : MonoBehaviour
         {
             resetable.CallReset();
         }
+    }
+
+    public void SetupMusic()
+    {
+        MusicManager existingMusicManager = FindObjectOfType<MusicManager>();
+        if (existingMusicManager == null)
+        {
+            GameObject newMusicManager = Instantiate(musicManagerPrefab, transform);
+        }
+
+        musicManager = FindObjectOfType<MusicManager>();
+        musicManager.SetMusicProfile(levelMusicProfile);
     }
 }

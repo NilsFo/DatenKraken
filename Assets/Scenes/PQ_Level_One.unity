@@ -1547,6 +1547,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef511d1bedb3fc84a9be1ac08f563d87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isAktiveOnStart: 1
+  isAktive: 0
   waypoints:
   - {fileID: 323060379}
   - {fileID: 616247924}
@@ -2149,6 +2151,10 @@ PrefabInstance:
       propertyPath: CMCameraFocus
       value: 
       objectReference: {fileID: 328770608}
+    - target: {fileID: 5873826806289413833, guid: b045aab7c65048942bc6b7f28de8be9c, type: 3}
+      propertyPath: levelMusicProfile
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5873826806289413833, guid: b045aab7c65048942bc6b7f28de8be9c, type: 3}
       propertyPath: objectiveProgressText
       value: 

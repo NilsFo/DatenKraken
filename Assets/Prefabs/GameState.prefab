@@ -46,9 +46,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerState: 0
   player: {fileID: 0}
+  cursor: {fileID: 0}
   objectiveTarget: 0
   objectiveCurrent: 0
   objectiveProgressText: {fileID: 0}
+  backToMainMenuTimeWindow: 2
+  backToMenuTF: {fileID: 0}
+  isTutorialLevel: 0
+  musicManagerPrefab: {fileID: 8549492382280437822, guid: 84b571c173075604aa6c50662c1c6933, type: 3}
+  musicManager: {fileID: 0}
+  levelMusicProfile: 0
   CMCameraFocus: {fileID: 0}
   cameraShakeMagnitude: 0
   cameraShakeDuration: 0
