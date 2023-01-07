@@ -107,7 +107,7 @@ public class Datenkrake : MonoBehaviour {
         }
     }
     private bool TryInteract() {
-        bool success = FindInteractible(tentakel.transform.position, out var btn);
+        bool success = FindButton(tentakel.transform.position, out var btn);
         if (success) {
             btn.clickButton.Invoke();
             Debug.Log("Interacted with button", btn);
@@ -155,7 +155,7 @@ public class Datenkrake : MonoBehaviour {
         }
     }
     
-    private bool FindInteractible(Vector2 pos, out WebsiteButton btn) {
+    private bool FindButton(Vector2 pos, out WebsiteButton btn) {
         List<Collider2D> results = new List<Collider2D>();
         var contactFilter2D = new ContactFilter2D {
             layerMask = LayerMask.GetMask("Interactibles"),
@@ -164,12 +164,16 @@ public class Datenkrake : MonoBehaviour {
         };
         var count = Physics2D.OverlapPoint(pos, contactFilter2D, results);
         if (count > 0) {
-            btn = results[0].GetComponent<WebsiteButton>();
-            return true;
-        } else {
-            btn = null;
-            return false;
+            foreach (var result in results) {
+                var b = result.GetComponent<WebsiteButton>();
+                if (b != null) {
+                    btn = b;
+                    return true;
+                }
+            }
         }
+        btn = null;
+        return false;
     }
     private void PullDatenkrakeToTentakel() {
         transform.position = Vector3.MoveTowards(transform.position, tentakel.transform.position, pullSpeed * Time.deltaTime);
@@ -248,8 +252,7 @@ public class Datenkrake : MonoBehaviour {
 
     public void OnAdvertismentHidden()
     {
-        bool success = FindAd(transform.position, out var col);
-        if (!success)
+        if(currentAdBox == null || currentAdBox.GetComponent<Advertisement>().adEnabled == false)
         {
             Debug.Log("The player was in an ad, that has recently been closed!");
             gameState.SoftResetLevel();
@@ -260,6 +263,8 @@ public class Datenkrake : MonoBehaviour {
     {
         // TODO will this work?
         transform.position = originalPosition;
+        if(state != KrakenState.WALKING)
+            CancelTentakel();
     }
 
 }
