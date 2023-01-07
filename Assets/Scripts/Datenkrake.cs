@@ -122,7 +122,7 @@ public class Datenkrake : MonoBehaviour {
         state = KrakenState.WALKING;
     }
 
-    private bool FindAd(Vector2 pos, out Collider2D col2D) {
+    public bool FindAd(Vector2 pos, out Collider2D col2D) {
         List<Collider2D> results = new List<Collider2D>();
         var contactFilter2D = new ContactFilter2D {
             layerMask = LayerMask.GetMask("Ad"),

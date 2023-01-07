@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   state: 0
-  gameState: {fileID: 0}
+  _gameState: {fileID: 0}
   mySpriteRenderer: {fileID: 4050224675879545977}
   spriteDefault: {fileID: 21300000, guid: 3a674b6320fc70644845755b49b32880, type: 3}
   spriteClick: {fileID: 21300000, guid: 33e0bd73136d76f478b101cbfa0bbe54, type: 3}
@@ -55,7 +55,7 @@ MonoBehaviour:
   clickDelay: 0.8
   clickAnimationDuration: 0.42
   lockedOnCloseBT: {fileID: 0}
-  movementSpeed: 0
+  movementSpeed: 5
 --- !u!58 &7296235844067792995
 CircleCollider2D:
   m_ObjectHideFlags: 0
