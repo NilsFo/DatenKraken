@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 273628846}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 1}
-  m_LocalScale: {x: 0.17336631, y: 0.23614982, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1906975527479020509}
@@ -143,7 +143,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.5200988, y: 0.9427029}
+  m_Size: {x: 9.4, y: 4.6}
   m_EdgeRadius: 0
 --- !u!114 &3180714354375168496
 MonoBehaviour:
@@ -161,8 +161,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 9ad825c8c19a11948b8fb6c1eb0f7b67, type: 3}
   myRenderer: {fileID: 273628848}
   enabledOnStart: 1
-  enabled: 1
-  collider: {fileID: 1587911819584601593}
+  adEnabled: 1
+  adCollider: {fileID: 1587911819584601593}
   visualization: {fileID: 273628847}
   onHideAd:
     m_PersistentCalls:

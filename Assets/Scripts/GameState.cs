@@ -157,4 +157,8 @@ public class GameState : MonoBehaviour
             cursor.ResetLookingForButtonTimer();
         }
     }
+
+    public bool ControlsEnabled() {
+        return playerState == PlayerState.PLAYING;
+    }
 }

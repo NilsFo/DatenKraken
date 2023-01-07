@@ -71,7 +71,7 @@ public class InteractableTextBox : MonoBehaviour
         {
             Vector3 wireOrigin = new Vector3(transform.position.x, transform.position.y, transform.position.z - 1);
             GUIStyle style = new GUIStyle();
-            style.normal.textColor = Color.white;
+            style.normal.textColor = Color.black;
             style.fontSize = 15;
             
             Handles.DrawWireDisc(wireOrigin, Vector3.forward, 0.5f);
