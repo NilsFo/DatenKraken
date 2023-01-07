@@ -124,14 +124,44 @@ public class MusicManager : MonoBehaviour
                 _audioSources[5].volumeDesired = 1.0f;
                 break;
             case MusicProfile.LEVEL_2:
+                _audioSources[0].volumeDesired = 1.0f;
+                _audioSources[1].volumeDesired = 1.0f;
+                _audioSources[2].volumeDesired = 1.0f;
+                _audioSources[3].volumeDesired = 1.0f;
+                _audioSources[4].volumeDesired = 1.0f;
+                _audioSources[5].volumeDesired = 1.0f;
                 break;
             case MusicProfile.LEVEL_3:
+                _audioSources[0].volumeDesired = 1.0f;
+                _audioSources[1].volumeDesired = 1.0f;
+                _audioSources[2].volumeDesired = 1.0f;
+                _audioSources[3].volumeDesired = 1.0f;
+                _audioSources[4].volumeDesired = 1.0f;
+                _audioSources[5].volumeDesired = 1.0f;
                 break;
             case MusicProfile.LEVEL_4:
+                _audioSources[0].volumeDesired = 1.0f;
+                _audioSources[1].volumeDesired = 1.0f;
+                _audioSources[2].volumeDesired = 1.0f;
+                _audioSources[3].volumeDesired = 1.0f;
+                _audioSources[4].volumeDesired = 1.0f;
+                _audioSources[5].volumeDesired = 1.0f;
                 break;
             case MusicProfile.LEVEL_5:
+                _audioSources[0].volumeDesired = 1.0f;
+                _audioSources[1].volumeDesired = 1.0f;
+                _audioSources[2].volumeDesired = 1.0f;
+                _audioSources[3].volumeDesired = 1.0f;
+                _audioSources[4].volumeDesired = 1.0f;
+                _audioSources[5].volumeDesired = 1.0f;
                 break;
             case MusicProfile.LEVEL_6:
+                _audioSources[0].volumeDesired = 1.0f;
+                _audioSources[1].volumeDesired = 1.0f;
+                _audioSources[2].volumeDesired = 1.0f;
+                _audioSources[3].volumeDesired = 1.0f;
+                _audioSources[4].volumeDesired = 1.0f;
+                _audioSources[5].volumeDesired = 1.0f;
                 break;
         }
     }

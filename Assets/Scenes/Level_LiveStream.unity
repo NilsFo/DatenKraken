@@ -1003,6 +1003,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1587911819584601595, guid: bb8cee2b23b64d140969babe3e2e5aee, type: 3}
   m_PrefabInstance: {fileID: 732316313}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &758703058 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 299747862849995633, guid: b60faa9f0c2c370448fcfb141c088afe, type: 3}
+  m_PrefabInstance: {fileID: 117363033474686543}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &808860522
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2726,6 +2731,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameState
       objectReference: {fileID: 0}
+    - target: {fileID: 5873826806289413833, guid: b045aab7c65048942bc6b7f28de8be9c, type: 3}
+      propertyPath: backToMenuTF
+      value: 
+      objectReference: {fileID: 758703058}
     - target: {fileID: 5873826806289413833, guid: b045aab7c65048942bc6b7f28de8be9c, type: 3}
       propertyPath: CMCameraFocus
       value: 

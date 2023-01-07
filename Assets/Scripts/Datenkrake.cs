@@ -59,6 +59,8 @@ public class Datenkrake : MonoBehaviour {
         Vector3 krakeDeltaV = Vector3.zero;
         Vector3 tentakelDeltaV = Vector3.zero;
         
+        // TODO tentakel z behind me
+        
         Keyboard keyboard = Keyboard.current;
         if (keyboard != null) {
             if (keyboard.aKey.isPressed) { x -= 1; }
@@ -197,7 +199,7 @@ public class Datenkrake : MonoBehaviour {
 
     private void MoveDatenkrake(Vector2 deltaV) {
 
-        _velocity += deltaV * acceleration;
+        _velocity += deltaV * acceleration * Time.deltaTime;
         _velocity = DampenXY(_velocity, dampening);
 
         float speedSqrd = _velocity.sqrMagnitude;

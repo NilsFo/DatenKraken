@@ -688,8 +688,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f23ab5728db509a4b8e3596965581025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  acceleration: 0.2
-  dampening: 20
+  acceleration: 42
+  dampening: 8
   maxSpeed: 5
   tentakelSpeed: 35
   pullSpeed: 15
