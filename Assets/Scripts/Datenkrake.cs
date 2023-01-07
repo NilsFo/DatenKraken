@@ -44,11 +44,14 @@ public class Datenkrake : MonoBehaviour {
             if (keyboard.sKey.isPressed) { y -= 1; }
             
             
-            if (keyboard.spaceKey.wasPressedThisFrame) {
+            if (keyboard.shiftKey.wasPressedThisFrame) {
                 if (state == KrakenState.WALKING) {
                     StartGrabbing();
 
-                } else if (state == KrakenState.GRABBING) {
+                }
+            }
+            if (keyboard.shiftKey.wasReleasedThisFrame) {
+                if (state == KrakenState.GRABBING) {
                     // Try pulling
                     var canPull = TryPull();
                     if(!canPull)
