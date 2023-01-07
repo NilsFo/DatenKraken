@@ -334,7 +334,13 @@ MonoBehaviour:
   krake: {fileID: 0}
   endEffector: {fileID: 2692937634697861013}
   target: {fileID: 865676543441754890}
-  moveSpeed: 15
+  active: 0
+  moveSpeed: 7
+  moveOffset: 0
+  moveInterval: 1
+  joints:
+  - {fileID: 5784779203863719197}
+  - {fileID: 3969836868651400670}
 --- !u!1 &4795901231375818326
 GameObject:
   m_ObjectHideFlags: 0
