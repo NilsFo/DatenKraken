@@ -256,7 +256,7 @@ public class Datenkrake : MonoBehaviour {
     {
         if(currentAdBox == null || currentAdBox.GetComponent<Advertisement>().adEnabled == false)
         {
-            Debug.Log("The player was in an ad, that has recently been closed!");
+            Debug.Log("The player was in an ad, that has recently been closed!",gameObject);
             gameState.SoftResetLevel();
         }
     }

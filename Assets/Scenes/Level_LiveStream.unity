@@ -396,6 +396,14 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3180714354375168496, guid: bb8cee2b23b64d140969babe3e2e5aee, type: 3}
+      propertyPath: onHideAd.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3180714354375168496, guid: bb8cee2b23b64d140969babe3e2e5aee, type: 3}
+      propertyPath: onShowAd.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4619948005410908844, guid: bb8cee2b23b64d140969babe3e2e5aee, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -2370,7 +2378,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 117363034075929587, guid: b60faa9f0c2c370448fcfb141c088afe, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b60faa9f0c2c370448fcfb141c088afe, type: 3}

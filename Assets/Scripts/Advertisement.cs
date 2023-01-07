@@ -36,7 +36,7 @@ public class Advertisement : MonoBehaviour
         }
         else
         {
-            HideAd();
+            HideAd(false);
         }
     }
 
@@ -64,7 +64,7 @@ public class Advertisement : MonoBehaviour
         onShowAd.Invoke();
     }
 
-    public void HideAd()
+    public void HideAd(bool notifyGameState = true)
     {
         adEnabled = false;
         adCollider.enabled = adEnabled;
@@ -72,8 +72,11 @@ public class Advertisement : MonoBehaviour
 
         onHideAd.Invoke();
 
-        // Checking for player
-        _gameState.player.OnAdvertismentHidden();
+        if (notifyGameState)
+        {
+            // Checking for player
+            _gameState.player.OnAdvertismentHidden();
+        }
     }
 
     public void OnSoftReset()

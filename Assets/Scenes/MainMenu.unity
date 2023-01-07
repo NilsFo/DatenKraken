@@ -152,7 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 850b40a85ccec484dafb19f4f9bddb13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MusicManagerPrefab: {fileID: 0}
+  MusicManagerPrefab: {fileID: 8549492382280437822, guid: 84b571c173075604aa6c50662c1c6933, type: 3}
   volumeSlider: {fileID: 478367693}
 --- !u!4 &120441228
 Transform:
