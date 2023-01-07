@@ -737,7 +737,7 @@ MonoBehaviour:
   maxSpeed: 5
   tentakelAcceleration: 0.15
   pullSpeed: 15
-  tentakel: {fileID: 978324615357068542}
+  tentakel: {fileID: 5199823746954416533}
   state: 0
   currentAdBox: {fileID: 0}
 --- !u!1 &978324614867831698
@@ -919,6 +919,7 @@ GameObject:
   - component: {fileID: 978324615357068537}
   - component: {fileID: 978324615357068542}
   - component: {fileID: 978324615357068543}
+  - component: {fileID: 5199823746954416533}
   m_Layer: 6
   m_Name: Tentakel
   m_TagString: Untagged
@@ -979,6 +980,18 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.2
+--- !u!114 &5199823746954416533
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 978324615357068540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5485c1746bffb3c4eaccdb98e4c618b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &978324615604523005
 GameObject:
   m_ObjectHideFlags: 0

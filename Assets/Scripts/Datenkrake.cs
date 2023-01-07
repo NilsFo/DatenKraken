@@ -12,7 +12,8 @@ public class Datenkrake : MonoBehaviour {
     public float tentakelAcceleration = 0.15f;
     public float pullSpeed = 20f;
 
-    public Rigidbody2D tentakel;
+    public TentacleInteraction tentakel;
+    private Rigidbody2D _tentakelRB;
 
     public enum KrakenState {
         WALKING, GRABBING, PULLING
@@ -24,6 +25,8 @@ public class Datenkrake : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
+        _tentakelRB = tentakel.GetComponent<Rigidbody2D>();
+        
         bool success = FindAd(transform.position, out var col);
         if (success) {
             currentAdBox = col;
@@ -83,7 +86,7 @@ public class Datenkrake : MonoBehaviour {
 
     }
     private void StartGrabbing() {
-        tentakel.AddForce(new Vector2(Random.Range(-1f,1f), Random.Range(-1f,1f)).normalized * 200f);
+        _tentakelRB.AddForce(new Vector2(Random.Range(-1f,1f), Random.Range(-1f,1f)).normalized * 200f);
         state = KrakenState.GRABBING;
     }
     private bool TryPull() {
@@ -124,8 +127,8 @@ public class Datenkrake : MonoBehaviour {
         }
     }
     private void MoveTentakel(Vector2 deltaV) {
-        var tentakelPos = tentakel.position;
-        tentakel.MovePosition(tentakelPos + deltaV * tentakelAcceleration);
+        var tentakelPos = _tentakelRB.position;
+        _tentakelRB.MovePosition(tentakelPos + deltaV * tentakelAcceleration);
         if (deltaV.sqrMagnitude > 0) {
             //tentakel.MoveRotation(Vector2.Angle(Vector2.right, deltaV));
         }
