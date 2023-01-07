@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class InteractableTextBox : MonoBehaviour
@@ -49,11 +50,11 @@ public class InteractableTextBox : MonoBehaviour
         foreach (char c in textToDisplay.ToCharArray())
         {
             i++;
-            if (c.ToString().Trim().Length==0)
+            if (c.ToString().Trim().Length == 0)
             {
                 continue;
             }
-            
+
             GameObject newCharacterObj = Instantiate(textCharacterPrefab, transform);
             characterList.Add(newCharacterObj);
             newCharacterObj.transform.localPosition = new Vector3(i * characterOffset, 0, 0);
@@ -61,5 +62,21 @@ public class InteractableTextBox : MonoBehaviour
             InteractableTextCharacter textCharacter = newCharacterObj.GetComponent<InteractableTextCharacter>();
             textCharacter.SetChar(c);
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+#if UNITY_EDITOR
+        if (!Application.isPlaying)
+        {
+            Vector3 wireOrigin = new Vector3(transform.position.x, transform.position.y, transform.position.z - 1);
+            GUIStyle style = new GUIStyle();
+            style.normal.textColor = Color.white;
+            style.fontSize = 15;
+            
+            Handles.DrawWireDisc(wireOrigin, Vector3.forward, 0.5f);
+            Handles.Label(transform.position, "Text Spawner: '" + textToDisplay + "'",style);
+        }
+#endif
     }
 }

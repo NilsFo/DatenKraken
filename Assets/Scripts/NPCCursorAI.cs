@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class NPCCursorAI : MonoBehaviour
@@ -217,5 +218,21 @@ public class NPCCursorAI : MonoBehaviour
     public void ResetLookingForButtonTimer()
     {
         _lookingForButtonTimer = 0;
+    }
+
+
+    private void OnDrawGizmos()
+    {
+#if UNITY_EDITOR
+        if (Application.isPlaying)
+        {
+            //Debug.DrawLine(sourceNPC.transform.position, roamingOrigin);
+            Vector3 wireOrigin = new Vector3(transform.position.x, transform.position.y, transform.position.z - 1);
+            GUIStyle style = new GUIStyle();
+            style.normal.textColor = Color.white;
+            style.fontSize = 15;
+            Handles.Label(transform.position, "State: " + state, style);
+        }
+#endif
     }
 }
