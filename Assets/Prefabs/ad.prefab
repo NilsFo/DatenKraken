@@ -159,7 +159,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enabledOnStart: 1
   enabled: 1
-  collider: {fileID: 1587911819584601593}
+  adCollider: {fileID: 1587911819584601593}
   visualization: {fileID: 273628847}
 --- !u!1 &6028515485395835043
 GameObject:

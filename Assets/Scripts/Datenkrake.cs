@@ -24,6 +24,8 @@ public class Datenkrake : MonoBehaviour {
     private Vector2 _velocity;
     public Collider2D currentAdBox;
 
+    private float _z;
+
     // Start is called before the first frame update
     void Start() {
         _tentakelRB = tentakel.GetComponent<Rigidbody2D>();
@@ -31,10 +33,12 @@ public class Datenkrake : MonoBehaviour {
         
         bool success = FindAd(transform.position, out var col);
         if (success) {
-            currentAdBox = col;
+            SetAdBox(col);
         } else {
             Debug.LogError("Datenkrake was not placed on an Ad on start!");
         }
+
+        _z = transform.position.z;
     }
 
     // Update is called once per frame
@@ -50,11 +54,6 @@ public class Datenkrake : MonoBehaviour {
 
             if (keyboard.wKey.isPressed) { y += 1; }
             if (keyboard.sKey.isPressed) { y -= 1; }
-
-            if (gameState.playerState!= GameState.PlayerState.PLAYING)
-            {
-                // TODO Disable control here?
-            }
             
             if (keyboard.shiftKey.wasPressedThisFrame) {
                 if (state == KrakenState.WALKING) {
@@ -80,11 +79,11 @@ public class Datenkrake : MonoBehaviour {
 
         
         
-        if (state == KrakenState.WALKING) {
+        if (state == KrakenState.WALKING && gameState.ControlsEnabled()) {
             krakeDeltaV = new Vector3(x, y, 0).normalized;
         }
 
-        if (state == KrakenState.GRABBING) {
+        if (state == KrakenState.GRABBING && gameState.ControlsEnabled()) {
             tentakelDeltaV = new Vector3(x, y, 0).normalized;
         }
 
@@ -95,7 +94,6 @@ public class Datenkrake : MonoBehaviour {
             PullDatenkrakeToTentakel();
             MoveTentakel(Vector2.zero);
         }
-
     }
     private bool TryInteract() {
         bool success = FindInteractible(tentakel.transform.position, out var btn);
@@ -113,7 +111,7 @@ public class Datenkrake : MonoBehaviour {
         if (FindAd(tentakel.transform.position, out var col)) {
             if (col != currentAdBox) {
                 state = KrakenState.PULLING;
-                currentAdBox = col;
+                SetAdBox(col);
                 return true;
             }
         }
@@ -188,13 +186,14 @@ public class Datenkrake : MonoBehaviour {
         if (!currentAdBox.OverlapPoint(newPosition)) {
             bool canSwitch = FindAd(newPosition, out var col);
             if (canSwitch) {
-                currentAdBox = col;
+                SetAdBox(col);
             } else {
                 var blockPosition = currentAdBox.ClosestPoint(newPosition);
                 var d = blockPosition - (Vector2)newPosition;
 
                 _velocity = _velocity - d;
                 newPosition = blockPosition;
+                newPosition.z = _z;
             }
         }
         transform.position = newPosition;
@@ -214,5 +213,14 @@ public class Datenkrake : MonoBehaviour {
             vec += damp;
         }
         return vec;
+    }
+    
+    private void SetAdBox(Collider2D col) {
+        currentAdBox = col;
+        transform.parent = col.transform;
+    }
+
+    public Vector2 GetVelocity() {
+        return _velocity;
     }
 }

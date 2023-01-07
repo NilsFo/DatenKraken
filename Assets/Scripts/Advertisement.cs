@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Advertisement : MonoBehaviour {
     public bool enabledOnStart = true;
-    public bool enabled = true;
+    public bool adEnabled = true;
     
-    public Collider2D collider;
+    public Collider2D adCollider;
     public Transform visualization;
     
     // Start is called before the first frame update
@@ -26,14 +26,14 @@ public class Advertisement : MonoBehaviour {
     }
 
     public void DisplayAd() {
-        enabled = true;
-        collider.enabled = enabled;
-        visualization.gameObject.SetActive(enabled);
+        adEnabled = true;
+        adCollider.enabled = adEnabled;
+        visualization.gameObject.SetActive(adEnabled);
     }
 
     public void HideAd() {
-        enabled = false;
-        collider.enabled = enabled;
-        visualization.gameObject.SetActive(enabled);
+        adEnabled = false;
+        adCollider.enabled = adEnabled;
+        visualization.gameObject.SetActive(adEnabled);
     }
 }

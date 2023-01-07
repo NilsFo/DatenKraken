@@ -148,4 +148,8 @@ public class GameState : MonoBehaviour
         cameraShakeDuration = 0;
         _cameraShakeDurationTimer = 0;
     }
+
+    public bool ControlsEnabled() {
+        return playerState == PlayerState.PLAYING;
+    }
 }
