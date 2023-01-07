@@ -220,6 +220,14 @@ public class NPCCursorAI : MonoBehaviour
         _lookingForButtonTimer = 0;
     }
 
+    public void RequestInterrupt()
+    {
+        if (state==AIState.MOVING_TO_BUTTON)
+        {
+            ResetLookingForButtonTimer();
+            state = AIState.LOOKING_FOR_BUTTON;
+        }
+    }
 
     private void OnDrawGizmos()
     {
