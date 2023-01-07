@@ -27,6 +27,8 @@ public class TantakelMover : MonoBehaviour {
         //moveToPosition = endEffector.transform.position;
         _moveTimer = moveOffset;
         _waveTimer = moveOffset / moveInterval * _waveInterval;
+
+        target.transform.parent = krake.transform;
     }
 
     void Update() {
@@ -38,13 +40,15 @@ public class TantakelMover : MonoBehaviour {
             var alpha = (_waveTimer / _waveInterval ) * Mathf.PI * 2 + ((float)index / (float)joints.Length) * Mathf.PI * 2;
             joint.attachedRigidbody.AddRelativeForce(new Vector2(Mathf.Sin(alpha), -Mathf.Cos(alpha)) * (200f * Time.deltaTime));
         }
+        var alpha2 = (_waveTimer / _waveInterval ) * Mathf.PI * 2;
+        target.localPosition = (Vector2)target.localPosition + new Vector2(Mathf.Sin(alpha2), -Mathf.Cos(alpha2)) * (Time.deltaTime * 0.2f);
     }
 
     // Update is called once per frame
     void FixedUpdate() {
         if (!active)
             return;
-        var posTowards = Vector2.MoveTowards(endEffector.transform.position, (Vector2)target.position, (moveSpeed + krake.GetVelocity().magnitude) * Time.deltaTime);
+        /*var posTowards = Vector2.MoveTowards(endEffector.transform.position, (Vector2)target.position, (moveSpeed + krake.GetVelocity().magnitude) * Time.deltaTime);
 
         var delta = ((Vector2)endEffector.transform.position - (Vector2)krake.transform.position);
         var antiAttactor = delta * -1f / delta.magnitude * Time.deltaTime;
@@ -68,6 +72,16 @@ public class TantakelMover : MonoBehaviour {
                 target.position = pos;
                 target.parent = krake.currentAdBox.transform;
             }
+        }*/
+        var v = krake.GetVelocity();
+        if (v.magnitude < krake.maxSpeed/2f) {
+            var t = krake.currentAdBox.ClosestPoint(target.position);
+            var posTowards = Vector2.MoveTowards(endEffector.transform.position, t, moveSpeed/2 * Time.deltaTime);
+            endEffector.MovePosition(posTowards);
+        } else {
+            Vector2 t = (Vector2)krake.transform.position -v.normalized * 3f + (Vector2)target.localPosition.normalized * 1.5f;
+            var posTowards = Vector2.MoveTowards(endEffector.transform.position, t, moveSpeed * Time.deltaTime);
+            endEffector.MovePosition(posTowards);
         }
     }
 }
