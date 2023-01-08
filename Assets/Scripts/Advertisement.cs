@@ -97,6 +97,9 @@ public class Advertisement : MonoBehaviour
     }
     public void DisplayAd() {
         // Prep animation
+        if (adEnabled)
+            // Nothing to do
+            return;
         if (popupSource != null)
             _popupSourceLocation = popupSource.transform.position;
         else
