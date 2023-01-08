@@ -20,7 +20,8 @@ public class Advertisement : MonoBehaviour
     public SpriteRenderer frame;
     
     public float displayAnimTime = 1f;
-    public Vector2 popupSourceLocation = new Vector2(0,0);
+    private Vector2 _popupSourceLocation = new Vector2(0,0);
+    public Transform popupSource;
 
     public UnityEvent onHideAd;
     public UnityEvent onShowAd;
@@ -63,7 +64,7 @@ public class Advertisement : MonoBehaviour
         if (_displayTimer > 0) {
             var f = _displayTimer / displayAnimTime;
             _displayTimer -= Time.deltaTime;
-            frame.transform.position = Vector2.Lerp(transform.localToWorldMatrix.MultiplyPoint3x4(Vector2.zero),popupSourceLocation, f);
+            frame.transform.position = Vector2.Lerp(transform.localToWorldMatrix.MultiplyPoint3x4(Vector2.zero),_popupSourceLocation, f);
             frame.size = Vector2.Lerp(_frameSize, Vector2.zero, f);
 
             if (_displayTimer <= 0) {
@@ -94,9 +95,12 @@ public class Advertisement : MonoBehaviour
     }
     public void DisplayAd() {
         // Prep animation
-        popupSourceLocation = _gameState.player.tentakel.transform.position;
+        if (popupSource != null)
+            _popupSourceLocation = popupSource.transform.position;
+        else
+            _popupSourceLocation = frame.transform.position;
         _displayTimer = displayAnimTime;
-        frame.transform.position = popupSourceLocation;
+        frame.transform.position = _popupSourceLocation;
         frame.size = Vector2.zero;
         myRenderer.enabled = false;
         // show
