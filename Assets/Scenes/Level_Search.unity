@@ -1717,6 +1717,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 227664618}
     m_Modifications:
+    - target: {fileID: 4908870536010261891, guid: 955343278b76cd948b1bf601631fcbaa, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.25
+      objectReference: {fileID: 0}
     - target: {fileID: 5915103029311383242, guid: 955343278b76cd948b1bf601631fcbaa, type: 3}
       propertyPath: m_Name
       value: AdvertismentBox (5)
@@ -2005,7 +2009,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6076333462661661398, guid: 9009449d9721d4249a966fd8ab248eaf, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -8.75
+      value: -7.75
       objectReference: {fileID: 0}
     - target: {fileID: 6076333462661661398, guid: 9009449d9721d4249a966fd8ab248eaf, type: 3}
       propertyPath: m_LocalPosition.z

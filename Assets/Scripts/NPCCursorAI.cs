@@ -18,6 +18,7 @@ public class NPCCursorAI : MonoBehaviour
     public AIState state;
     private AIState _lastknownState;
     public GameState _gameState;
+    private MusicManager _musicManager;
     private Vector2 startPos;
 
     [Header("Visuals")] public SpriteRenderer mySpriteRenderer;
@@ -43,6 +44,7 @@ public class NPCCursorAI : MonoBehaviour
     {
         if (_gameState != null) _gameState.cursor = this;
 
+        _musicManager = FindObjectOfType<MusicManager>();
         startPos = transform.position;
         state = AIState.LOOKING_FOR_BUTTON;
         _lastknownState = state;
@@ -133,7 +135,17 @@ public class NPCCursorAI : MonoBehaviour
             if (_clickAnimationTimer >= clickAnimationDuration)
             {
                 // Animation over. Looking for next target.
-                state = AIState.LOOKING_FOR_BUTTON;
+                List<AdvertismentCloseButton> foundButtons = GetAllWebsiteButtons();
+                if (foundButtons.Count == 0)
+                {
+                    // Nothing found. Returning home.
+                    state = AIState.RETURN_HOME;
+                }
+                else
+                {
+                    // There is something, but let's call the timer to wait for it.
+                    state = AIState.LOOKING_FOR_BUTTON;
+                }
             }
         }
         else
@@ -141,6 +153,7 @@ public class NPCCursorAI : MonoBehaviour
             _clickAnimationTimer = 0;
         }
 
+        // Updating cursor sprite
         Sprite usedSprite = spriteDefault;
         if (IsClickingState())
         {
@@ -148,6 +161,17 @@ public class NPCCursorAI : MonoBehaviour
         }
 
         mySpriteRenderer.sprite = usedSprite;
+
+        // Updating Music
+        if (state == AIState.CLICKING || state == AIState.WAITING_TO_CLICK)
+        {
+            if (_musicManager == null)
+            {
+                _musicManager = FindObjectOfType<MusicManager>();
+            }
+
+            _musicManager.RequestTemporaryBoostPicolo(2, skipFadeIn: false);
+        }
 
         // Checking if state has changed
         if (_lastknownState != state)
@@ -173,7 +197,10 @@ public class NPCCursorAI : MonoBehaviour
             if (closeButton != null)
             {
                 closeButton.OnNPCClick();
-                _gameState.ShakeCamera(0.1f, 0.08f);
+                if (_gameState != null)
+                {
+                    _gameState.ShakeCamera(0.1f, 0.08f);
+                }
             }
         }
     }
@@ -234,13 +261,7 @@ public class NPCCursorAI : MonoBehaviour
     private void FindNextCLoseBT()
     {
         print("Cursor: Looking for next Button to close!");
-        List<AdvertismentCloseButton> foundButtons = new List<AdvertismentCloseButton>();
-
-        AdvertismentCloseButton[] buttons = FindObjectsOfType<AdvertismentCloseButton>();
-        if (buttons != null)
-        {
-            foundButtons.AddRange(buttons);
-        }
+        List<AdvertismentCloseButton> foundButtons = GetAllWebsiteButtons();
 
         GameObject closestBT = null;
         float bestDistance = float.MaxValue;
@@ -264,6 +285,18 @@ public class NPCCursorAI : MonoBehaviour
             lockedOnCloseBT = closestBT;
             state = AIState.MOVING_TO_BUTTON;
         }
+    }
+
+    public List<AdvertismentCloseButton> GetAllWebsiteButtons()
+    {
+        List<AdvertismentCloseButton> foundButtons = new List<AdvertismentCloseButton>();
+        AdvertismentCloseButton[] buttons = FindObjectsOfType<AdvertismentCloseButton>();
+        if (buttons != null)
+        {
+            foundButtons.AddRange(buttons);
+        }
+
+        return foundButtons;
     }
 
     public void ResetLookingForButtonTimer()
