@@ -28,6 +28,9 @@ public class MusicManager : MonoBehaviour
     public AudioSource track14;
     public AudioSource track15;
     public AudioSource track16;
+    public AudioSource track17;
+    public AudioSource track18;
+    public AudioSource track19;
     private List<VolumizedAudioSource> _audioSources;
 
     public enum MusicProfile
@@ -73,6 +76,9 @@ public class MusicManager : MonoBehaviour
         _audioSources.Add(new VolumizedAudioSource(track14));
         _audioSources.Add(new VolumizedAudioSource(track15));
         _audioSources.Add(new VolumizedAudioSource(track16));
+        _audioSources.Add(new VolumizedAudioSource(track17));
+        _audioSources.Add(new VolumizedAudioSource(track18));
+        _audioSources.Add(new VolumizedAudioSource(track19));
         SetMusicProfile(MusicProfile.SILENCE);
         _lastKnownProfile = currentProfile;
 
@@ -95,10 +101,21 @@ public class MusicManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        foreach (VolumizedAudioSource audioSource in _audioSources)
+        // Updating volumes for all audio sources
+        for (var i = 0; i < _audioSources.Count; i++)
         {
+            VolumizedAudioSource audioSource = _audioSources[i];
+            float boostTimer = audioSource.boostTimeRemaining;
+            boostTimer -= Time.deltaTime;
+            audioSource.boostTimeRemaining = boostTimer;
+
             float volumeCurrent = audioSource.volumeCurrent;
             float volumeDesired = audioSource.volumeDesired;
+            if (boostTimer > 0)
+            {
+                // Temporary boosted, so the desired volume is 1!
+                volumeDesired = 1.0f;
+            }
 
             if (volumeCurrent < volumeDesired)
             {
@@ -165,6 +182,9 @@ public class MusicManager : MonoBehaviour
          * _audioSources[13].volumeDesired = 1.0f; // Tiefe Streicher
          * _audioSources[14].volumeDesired = 1.0f; // Violine
          * _audioSources[15].volumeDesired = 1.0f; // Waterpeal
+         * _audioSources[16].volumeDesired = 1.0f; // Glockenspiel
+         * _audioSources[17].volumeDesired = 1.0f; // Picolo
+         * _audioSources[18].volumeDesired = 1.0f; // Trommeln
          */
 
         print("Known instruments: " + _audioSources.Count);
@@ -262,16 +282,42 @@ public class MusicManager : MonoBehaviour
         }
     }
 
+    public void RequestTemporaryMusicBoost(int instrumentIndex, float duration, bool skipFadeIn = false)
+    {
+        _audioSources[instrumentIndex].boostTimeRemaining = duration;
+        if (skipFadeIn)
+        {
+            _audioSources[instrumentIndex].volumeCurrent = 1.0f;
+        }
+    }
+
+    public void RequestTemporaryBoostGlockenspiel(float duration, bool skipFadeIn = false)
+    {
+        RequestTemporaryMusicBoost(16, duration, skipFadeIn);
+    }
+
+    public void RequestTemporaryBoostPicolo(float duration, bool skipFadeIn = false)
+    {
+        RequestTemporaryMusicBoost(17, duration, skipFadeIn);
+    }
+
+    public void RequestTemporaryBoostTrommeln(float duration, bool skipFadeIn = false)
+    {
+        RequestTemporaryMusicBoost(18, duration, skipFadeIn);
+    }
+
     private class VolumizedAudioSource
     {
         public float volumeCurrent;
         public float volumeDesired;
+        public float boostTimeRemaining;
         public AudioSource audioSource;
 
         public VolumizedAudioSource(AudioSource audioSource)
         {
             this.volumeDesired = 0;
             this.volumeCurrent = 0;
+            this.boostTimeRemaining = 0;
             this.audioSource = audioSource;
         }
     }

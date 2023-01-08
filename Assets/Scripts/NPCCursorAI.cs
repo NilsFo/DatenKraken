@@ -18,6 +18,7 @@ public class NPCCursorAI : MonoBehaviour
     public AIState state;
     private AIState _lastknownState;
     public GameState _gameState;
+    private MusicManager _musicManager;
     private Vector2 startPos;
 
     [Header("Visuals")] public SpriteRenderer mySpriteRenderer;
@@ -43,6 +44,7 @@ public class NPCCursorAI : MonoBehaviour
     {
         if (_gameState != null) _gameState.cursor = this;
 
+        _musicManager = FindObjectOfType<MusicManager>();
         startPos = transform.position;
         state = AIState.LOOKING_FOR_BUTTON;
         _lastknownState = state;
@@ -151,6 +153,7 @@ public class NPCCursorAI : MonoBehaviour
             _clickAnimationTimer = 0;
         }
 
+        // Updating cursor sprite
         Sprite usedSprite = spriteDefault;
         if (IsClickingState())
         {
@@ -158,6 +161,17 @@ public class NPCCursorAI : MonoBehaviour
         }
 
         mySpriteRenderer.sprite = usedSprite;
+
+        // Updating Music
+        if (state == AIState.CLICKING || state == AIState.WAITING_TO_CLICK)
+        {
+            if (_musicManager == null)
+            {
+                _musicManager = FindObjectOfType<MusicManager>();
+            }
+
+            _musicManager.RequestTemporaryBoostPicolo(2, skipFadeIn: false);
+        }
 
         // Checking if state has changed
         if (_lastknownState != state)
