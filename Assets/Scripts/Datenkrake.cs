@@ -92,7 +92,7 @@ public class Datenkrake : MonoBehaviour {
                 }
             }
             if (keyboard.shiftKey.wasReleasedThisFrame || keyboard.spaceKey.wasReleasedThisFrame || Mouse.current.leftButton.wasReleasedThisFrame) {
-                if (state == KrakenState.GRABBING) {
+                if (state == KrakenState.GRABBING && gameState.ControlsEnabled()) {
                     // Try Interact
                     bool interacted = TryInteract();
                     if(interacted)
@@ -204,7 +204,7 @@ public class Datenkrake : MonoBehaviour {
     }
     private void MoveTentakel(Vector2 deltaV) {
         var tentakelPos = _tentakelRB.position;
-        if (Mouse.current.leftButton.isPressed && state != KrakenState.PULLING) {
+        if (Mouse.current.leftButton.isPressed && state != KrakenState.PULLING && gameState.ControlsEnabled()) {
             
             _tentakelRB.MovePosition(Vector2.MoveTowards(tentakelPos, _camera.ScreenToWorldPoint(Mouse.current.position.ReadValue()), Time.deltaTime * tentakelSpeed));
         } else {
