@@ -82,7 +82,8 @@ public class Advertisement : MonoBehaviour
         // TODO Cycle random images?
     }
 
-    private void ShowAd() {
+    // Enable Ad without animation
+    public void ShowAd() {
         _respawn_progress = 0;
         if (!adEnabled)
         {
@@ -95,6 +96,8 @@ public class Advertisement : MonoBehaviour
 
         onShowAd.Invoke();
     }
+    
+    // Enable Ad with animation
     public void DisplayAd() {
         // Prep animation
         if (adEnabled)

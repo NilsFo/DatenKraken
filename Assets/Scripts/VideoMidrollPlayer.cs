@@ -72,7 +72,7 @@ public class VideoMidrollPlayer : MonoBehaviour
         showingMidRoll = true;
 
         myWebsiteButton.DisableButton();
-        midRollAd.DisplayAd();
+        midRollAd.ShowAd();
         bannerAd.HideAd();
     }
 
