@@ -205,8 +205,10 @@ public class Datenkrake : MonoBehaviour {
     private void MoveTentakel(Vector2 deltaV) {
         var tentakelPos = _tentakelRB.position;
         if (Mouse.current.leftButton.isPressed && state != KrakenState.PULLING && gameState.ControlsEnabled()) {
-            
-            _tentakelRB.MovePosition(Vector2.MoveTowards(tentakelPos, _camera.ScreenToWorldPoint(Mouse.current.position.ReadValue()), Time.deltaTime * tentakelSpeed));
+            var targetPos = _camera.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+            var krakenPos = transform.position;
+            targetPos = (targetPos - krakenPos).normalized * 5f + krakenPos;
+            _tentakelRB.MovePosition(Vector2.MoveTowards(tentakelPos, targetPos, Time.deltaTime * tentakelSpeed));
         } else {
             _tentakelRB.MovePosition(tentakelPos + deltaV * (tentakelSpeed * Time.deltaTime));
             if (deltaV.sqrMagnitude > 0) {
