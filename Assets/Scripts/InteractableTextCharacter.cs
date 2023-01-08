@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class InteractableTextCharacter : MonoBehaviour
@@ -16,10 +15,14 @@ public class InteractableTextCharacter : MonoBehaviour
     public float cameraShakeMagnitude;
     public float cameraShakeDuration;
 
+    public float collectSpeed = 10f;
+
     public float animInterval = 3f;
     private float _animTimer;
 
     private bool _collected;
+
+    public List<InteractableTextCharacter> adjacentChars;
 
     private void Awake()
     {
@@ -37,9 +40,11 @@ public class InteractableTextCharacter : MonoBehaviour
     // Update is called once per frame
     void Update() {
         if (_collected) {
-            var tentaclepos = gameState.player.tentakel.transform.position;
-            transform.position = Vector2.MoveTowards(transform.position, tentaclepos, 10 * Time.deltaTime);
-            if (((Vector2)tentaclepos - (Vector2)transform.position).magnitude < 0.1f) {
+            var collectionPos = gameState.player.transform.position;
+            transform.position = Vector2.MoveTowards(transform.position, collectionPos, collectSpeed * Time.deltaTime);
+            collectSpeed += Time.deltaTime * 100;
+            if (((Vector2)collectionPos - (Vector2)transform.position).magnitude < 0.1f) {
+                gameState.player.Eat();
                 Destroy(gameObject);
             }
         }
@@ -70,14 +75,35 @@ public class InteractableTextCharacter : MonoBehaviour
     [ContextMenu("Collect me")]
     public void Collect()
     {
+        if(_collected)
+            return;
+        
         Debug.Log("Collected: '" + myChar + "'!", gameObject);
-        gameState.ShakeCamera(cameraShakeMagnitude, cameraShakeDuration);
         //Destroy(gameObject);
         _collected = true;
+
+        Invoke(nameof(CollectAdjacent), 0.05f);
     }
 
     private void OnDestroy()
     {
         gameState.IncreaseObjectiveProgress();
+        gameState.ShakeCamera(cameraShakeMagnitude, cameraShakeDuration);
+    }
+
+    private void CollectAdjacent() {
+        foreach (var c in adjacentChars) {
+            if(c != null && !c._collected)
+                c.Collect();
+        }
+    }
+
+    public void MakeAdjacent(InteractableTextCharacter c) {
+        if (!adjacentChars.Contains(c)) {
+            adjacentChars.Add(c);
+            if (!c.adjacentChars.Contains(this)) {
+                c.adjacentChars.Add(this);
+            }
+        }
     }
 }
