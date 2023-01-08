@@ -60,25 +60,34 @@ public class MusicManager : MonoBehaviour
 
         // Setting up lists
         _audioSources = new List<VolumizedAudioSource>();
-        _audioSources.Add(new VolumizedAudioSource(track1));
-        _audioSources.Add(new VolumizedAudioSource(track2));
-        _audioSources.Add(new VolumizedAudioSource(track3));
-        _audioSources.Add(new VolumizedAudioSource(track4));
-        _audioSources.Add(new VolumizedAudioSource(track5));
-        _audioSources.Add(new VolumizedAudioSource(track6));
-        _audioSources.Add(new VolumizedAudioSource(track7));
-        _audioSources.Add(new VolumizedAudioSource(track8));
-        _audioSources.Add(new VolumizedAudioSource(track9));
-        _audioSources.Add(new VolumizedAudioSource(track10));
-        _audioSources.Add(new VolumizedAudioSource(track11));
-        _audioSources.Add(new VolumizedAudioSource(track12));
-        _audioSources.Add(new VolumizedAudioSource(track13));
-        _audioSources.Add(new VolumizedAudioSource(track14));
-        _audioSources.Add(new VolumizedAudioSource(track15));
-        _audioSources.Add(new VolumizedAudioSource(track16));
-        _audioSources.Add(new VolumizedAudioSource(track17));
-        _audioSources.Add(new VolumizedAudioSource(track18));
-        _audioSources.Add(new VolumizedAudioSource(track19));
+        _audioSources.Add(new VolumizedAudioSource(track1, 1.0f, 1.0f));
+        _audioSources.Add(new VolumizedAudioSource(track2, 1.0f, 1.0f));
+        _audioSources.Add(new VolumizedAudioSource(track3, 1.0f, 1.0f));
+        _audioSources.Add(new VolumizedAudioSource(track4, 1.0f, 1.0f));
+        _audioSources.Add(new VolumizedAudioSource(track5, 1.0f, 1.0f));
+        _audioSources.Add(new VolumizedAudioSource(track6, 1.0f, 1.0f));
+        _audioSources.Add(new VolumizedAudioSource(track7, 1.0f, 1.0f));
+        _audioSources.Add(new VolumizedAudioSource(track8, 1.0f, 1.0f));
+        _audioSources.Add(new VolumizedAudioSource(track9, 1.0f, 1.0f));
+        _audioSources.Add(new VolumizedAudioSource(track10, 1.0f, 1.0f));
+        _audioSources.Add(new VolumizedAudioSource(track11, 1.0f, 1.0f));
+        _audioSources.Add(new VolumizedAudioSource(track12, 1.0f, 1.0f));
+        _audioSources.Add(new VolumizedAudioSource(track13, 1.0f, 1.0f));
+        _audioSources.Add(new VolumizedAudioSource(track14, 1.0f, 1.0f));
+        _audioSources.Add(new VolumizedAudioSource(track15, 1.0f, 1.0f));
+        _audioSources.Add(new VolumizedAudioSource(track16, 1.0f, 1.0f));
+
+        // Specials
+        _audioSources.Add(new VolumizedAudioSource(track17, 1.5f, 2.0f));
+        _audioSources.Add(new VolumizedAudioSource(track18, 1.5f, 2.0f));
+        _audioSources.Add(new VolumizedAudioSource(track19, 1.5f, 2.0f));
+
+        // Audio fixes
+        _audioSources[16].boostVolumeMult = 0.5f;
+        _audioSources[17].boostVolumeMult = 0.5f;
+        _audioSources[18].boostVolumeMult = 0.5f;
+
+        // Init profiles
         SetMusicProfile(MusicProfile.SILENCE);
         _lastKnownProfile = currentProfile;
 
@@ -105,13 +114,19 @@ public class MusicManager : MonoBehaviour
         for (var i = 0; i < _audioSources.Count; i++)
         {
             VolumizedAudioSource audioSource = _audioSources[i];
+            float fadeInSpeedMult = audioSource.fadeInSpeedMult;
+            float fadeOutSpeedMult = audioSource.fadeOutSpeedMult;
+
+            // Updating boost timers
             float boostTimer = audioSource.boostTimeRemaining;
+            float boostVolumeMult = audioSource.boostVolumeMult;
             boostTimer -= Time.deltaTime;
+            bool boosed = boostTimer > 0;
             audioSource.boostTimeRemaining = boostTimer;
 
             float volumeCurrent = audioSource.volumeCurrent;
             float volumeDesired = audioSource.volumeDesired;
-            if (boostTimer > 0)
+            if (boosed)
             {
                 // Temporary boosted, so the desired volume is 1!
                 volumeDesired = 1.0f;
@@ -119,12 +134,12 @@ public class MusicManager : MonoBehaviour
 
             if (volumeCurrent < volumeDesired)
             {
-                volumeCurrent = volumeCurrent + volumeChangeRate * Time.deltaTime;
+                volumeCurrent = volumeCurrent + volumeChangeRate * Time.deltaTime * fadeInSpeedMult;
             }
 
             if (volumeCurrent > volumeDesired)
             {
-                volumeCurrent = volumeCurrent - volumeChangeRate * Time.deltaTime;
+                volumeCurrent = volumeCurrent - volumeChangeRate * Time.deltaTime * fadeOutSpeedMult;
             }
 
             volumeCurrent = MathF.Max(volumeCurrent, 0);
@@ -133,6 +148,11 @@ public class MusicManager : MonoBehaviour
             if (Math.Abs(volumeCurrent - volumeDesired) < volumeDifferenceTolerance)
             {
                 volumeCurrent = volumeDesired;
+            }
+
+            if (boosed)
+            {
+                // volumeCurrent = volumeCurrent * boostVolumeMult;
             }
 
             // Storing changed volume
@@ -310,14 +330,24 @@ public class MusicManager : MonoBehaviour
     {
         public float volumeCurrent;
         public float volumeDesired;
-        public float boostTimeRemaining;
         public AudioSource audioSource;
 
-        public VolumizedAudioSource(AudioSource audioSource)
+        public float boostTimeRemaining;
+        public float boostVolumeMult;
+
+        public float fadeInSpeedMult;
+        public float fadeOutSpeedMult;
+
+
+        public VolumizedAudioSource(AudioSource audioSource, float fadeInSpeedMult, float fadeOutSpeedMult)
         {
+            this.audioSource = audioSource;
+            this.fadeInSpeedMult = fadeInSpeedMult;
+            this.fadeOutSpeedMult = fadeOutSpeedMult;
             this.volumeDesired = 0;
             this.volumeCurrent = 0;
             this.boostTimeRemaining = 0;
+            this.boostVolumeMult = 1.0f;
             this.audioSource = audioSource;
         }
     }

@@ -163,15 +163,25 @@ public class NPCCursorAI : MonoBehaviour
         mySpriteRenderer.sprite = usedSprite;
 
         // Updating Music
-        if (state == AIState.CLICKING || state == AIState.WAITING_TO_CLICK)
+        if (state == AIState.WAITING_TO_CLICK)
         {
             if (_musicManager == null)
             {
                 _musicManager = FindObjectOfType<MusicManager>();
             }
 
-            _musicManager.RequestTemporaryBoostPicolo(2, skipFadeIn: false);
+            _musicManager.RequestTemporaryBoostPicolo(0.1337f, skipFadeIn: false);
         }
+
+        // if (state==AIState.MOVING_TO_BUTTON)
+        // {
+        //     if (_musicManager == null)
+        //     {
+        //         _musicManager = FindObjectOfType<MusicManager>();
+        //     }
+        //     
+        //     _musicManager.RequestTemporaryBoostGlockenspiel(0.1337f, skipFadeIn: false);
+        // }
 
         // Checking if state has changed
         if (_lastknownState != state)

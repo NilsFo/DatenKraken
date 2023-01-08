@@ -35,14 +35,21 @@ public class InteractableTextCharacter : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update() {
-        if (_collected) {
+    void Update()
+    {
+        if (_collected)
+        {
             var tentaclepos = gameState.player.tentakel.transform.position;
             transform.position = Vector2.MoveTowards(transform.position, tentaclepos, 10 * Time.deltaTime);
-            if (((Vector2)tentaclepos - (Vector2)transform.position).magnitude < 0.1f) {
+            if (((Vector2)tentaclepos - (Vector2)transform.position).magnitude < 0.1f)
+            {
                 Destroy(gameObject);
             }
+            
+            // Setting Music
+            gameState.musicManager.RequestTemporaryBoostTrommeln(1.1337f, skipFadeIn: false);
         }
+
         _animTimer += Time.deltaTime;
         if (_animTimer > animInterval)
             _animTimer -= animInterval;
