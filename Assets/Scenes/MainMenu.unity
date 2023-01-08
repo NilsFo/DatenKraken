@@ -1872,7 +1872,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1150160922413458770, guid: deb43789a6e83cd4286b8607f4a4e61f, type: 3}
       propertyPath: m_text
-      value: 'Debug: NF'
+      value: VideoStream
       objectReference: {fileID: 0}
     - target: {fileID: 2160442292717207122, guid: deb43789a6e83cd4286b8607f4a4e61f, type: 3}
       propertyPath: m_Pivot.x
@@ -1968,7 +1968,7 @@ PrefabInstance:
       objectReference: {fileID: 5506747820475630989}
     - target: {fileID: 8313344102332276648, guid: deb43789a6e83cd4286b8607f4a4e61f, type: 3}
       propertyPath: levelName
-      value: NF
+      value: Level_VideoStream
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: deb43789a6e83cd4286b8607f4a4e61f, type: 3}

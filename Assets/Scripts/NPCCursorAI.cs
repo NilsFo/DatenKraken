@@ -173,6 +173,7 @@ public class NPCCursorAI : MonoBehaviour
             if (closeButton != null)
             {
                 closeButton.OnNPCClick();
+                _gameState.ShakeCamera(0.1f, 0.08f);
             }
         }
     }
