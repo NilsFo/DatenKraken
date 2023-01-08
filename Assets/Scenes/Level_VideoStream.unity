@@ -1151,11 +1151,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1587911819584601593, guid: bb8cee2b23b64d140969babe3e2e5aee, type: 3}
       propertyPath: m_Size.x
-      value: 43.884293
+      value: 42.8164
       objectReference: {fileID: 0}
     - target: {fileID: 1587911819584601593, guid: bb8cee2b23b64d140969babe3e2e5aee, type: 3}
       propertyPath: m_Size.y
       value: 23.787352
+      objectReference: {fileID: 0}
+    - target: {fileID: 1587911819584601593, guid: bb8cee2b23b64d140969babe3e2e5aee, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1587911819584601593, guid: bb8cee2b23b64d140969babe3e2e5aee, type: 3}
       propertyPath: m_Offset.x
@@ -1171,11 +1175,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1587911819584601595, guid: bb8cee2b23b64d140969babe3e2e5aee, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -13.67
+      value: -14.5
       objectReference: {fileID: 0}
     - target: {fileID: 1587911819584601595, guid: bb8cee2b23b64d140969babe3e2e5aee, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.5
+      value: 2.6
       objectReference: {fileID: 0}
     - target: {fileID: 1587911819584601595, guid: bb8cee2b23b64d140969babe3e2e5aee, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1237,13 +1241,17 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6028515485395835043, guid: bb8cee2b23b64d140969babe3e2e5aee, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7008071988893859868, guid: bb8cee2b23b64d140969babe3e2e5aee, type: 3}
       propertyPath: m_Size.x
-      value: 44.351784
+      value: 42.75229
       objectReference: {fileID: 0}
     - target: {fileID: 7008071988893859868, guid: bb8cee2b23b64d140969babe3e2e5aee, type: 3}
       propertyPath: m_Size.y
-      value: 24.076502
+      value: 23.551863
       objectReference: {fileID: 0}
     - target: {fileID: 7110805936807824258, guid: bb8cee2b23b64d140969babe3e2e5aee, type: 3}
       propertyPath: m_Enabled

@@ -133,7 +133,17 @@ public class NPCCursorAI : MonoBehaviour
             if (_clickAnimationTimer >= clickAnimationDuration)
             {
                 // Animation over. Looking for next target.
-                state = AIState.LOOKING_FOR_BUTTON;
+                List<AdvertismentCloseButton> foundButtons = GetAllWebsiteButtons();
+                if (foundButtons.Count == 0)
+                {
+                    // Nothing found. Returning home.
+                    state = AIState.RETURN_HOME;
+                }
+                else
+                {
+                    // There is something, but let's call the timer to wait for it.
+                    state = AIState.LOOKING_FOR_BUTTON;
+                }
             }
         }
         else
@@ -237,13 +247,7 @@ public class NPCCursorAI : MonoBehaviour
     private void FindNextCLoseBT()
     {
         print("Cursor: Looking for next Button to close!");
-        List<AdvertismentCloseButton> foundButtons = new List<AdvertismentCloseButton>();
-
-        AdvertismentCloseButton[] buttons = FindObjectsOfType<AdvertismentCloseButton>();
-        if (buttons != null)
-        {
-            foundButtons.AddRange(buttons);
-        }
+        List<AdvertismentCloseButton> foundButtons = GetAllWebsiteButtons();
 
         GameObject closestBT = null;
         float bestDistance = float.MaxValue;
@@ -267,6 +271,18 @@ public class NPCCursorAI : MonoBehaviour
             lockedOnCloseBT = closestBT;
             state = AIState.MOVING_TO_BUTTON;
         }
+    }
+
+    public List<AdvertismentCloseButton> GetAllWebsiteButtons()
+    {
+        List<AdvertismentCloseButton> foundButtons = new List<AdvertismentCloseButton>();
+        AdvertismentCloseButton[] buttons = FindObjectsOfType<AdvertismentCloseButton>();
+        if (buttons != null)
+        {
+            foundButtons.AddRange(buttons);
+        }
+
+        return foundButtons;
     }
 
     public void ResetLookingForButtonTimer()
