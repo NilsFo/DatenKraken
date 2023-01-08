@@ -111,7 +111,7 @@ public class Datenkrake : MonoBehaviour {
     private bool TryInteract() {
         bool success = FindButton(tentakel.transform.position, out var btn);
         if (success) {
-            btn.clickButton.Invoke();
+            btn.RequestClick();
             Debug.Log("Interacted with button", btn);
         }
         return success;

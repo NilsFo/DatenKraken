@@ -6,7 +6,7 @@ using UnityEngine.Rendering.Universal.Internal;
 
 public class MusicManager : MonoBehaviour
 {
-    public static readonly float GLOBAL_GAME_VOLUME = 1.0f;
+    public static readonly float GLOBAL_GAME_VOLUME = 0.1f;
 
     public float globalUserVolume = 0.5f;
     public float volumeChangeRate = 0.35f;
@@ -175,8 +175,8 @@ public class MusicManager : MonoBehaviour
                 // Nothing to do, it's already silence
                 break;
             case MusicProfile.MAIN_MENU:
-                _audioSources[7].volumeDesired = 1.0f; // Klavier
-                _audioSources[12].volumeDesired = 1.0f; // Tiefe Bläster
+                _audioSources[1].volumeDesired = 1.0f;
+                _audioSources[6].volumeDesired = 1.0f;
                 break;
             case MusicProfile.LEVEL_1:
                 _audioSources[5].volumeDesired = 1.0f; // Hi Hat
