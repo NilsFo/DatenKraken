@@ -3,8 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
-using UnityEngine.UIElements;
 using Random = UnityEngine.Random;
 
 public class Datenkrake : MonoBehaviour {
@@ -12,7 +10,6 @@ public class Datenkrake : MonoBehaviour {
     public float dampening = 0.1f;
     public float maxSpeed = 10f;
     
-    [FormerlySerializedAs("tentakelAcceleration")]
     public float tentakelSpeed = 0.15f;
     public float pullSpeed = 20f;
 
@@ -31,6 +28,15 @@ public class Datenkrake : MonoBehaviour {
 
     private float _z;
     private Camera _camera;
+
+    private Vector2 _pullDir;
+
+    public SpriteRenderer faceSpriteRenderer;
+    private Sprite _defaultFaceSprite;
+    public Sprite eatFaceSprite;
+    public float eatFaceTime = 0.1f;
+
+    private float _eatTimer;
 
     private void OnEnable()
     {
@@ -51,10 +57,21 @@ public class Datenkrake : MonoBehaviour {
         }
 
         _z = transform.position.z;
+
+        _defaultFaceSprite = faceSpriteRenderer.sprite;
     }
 
     // Update is called once per frame
     void Update() {
+        
+        // eat stuff
+        if (_eatTimer > 0) {
+            _eatTimer -= Time.deltaTime;
+            if (_eatTimer <= 0) {
+                faceSpriteRenderer.sprite = _defaultFaceSprite;
+            }
+        }
+
         float x = 0, y = 0;
         Vector3 krakeDeltaV = Vector3.zero;
         Vector3 tentakelDeltaV = Vector3.zero;
@@ -125,11 +142,12 @@ public class Datenkrake : MonoBehaviour {
     }
     private bool TryPull() {
         if (FindAd(tentakel.transform.position, out var col)) {
-            if (col != currentAdBox) {
+            //if (col != currentAdBox) {
                 state = KrakenState.PULLING;
+                _pullDir = tentakel.transform.position - transform.position;
                 SetAdBox(col);
                 return true;
-            }
+            //}
         }
         return false;
     }
@@ -179,14 +197,14 @@ public class Datenkrake : MonoBehaviour {
     }
     private void PullDatenkrakeToTentakel() {
         transform.position = Vector3.MoveTowards(transform.position, tentakel.transform.position, pullSpeed * Time.deltaTime);
-        if ((transform.position - tentakel.transform.position).magnitude < 0.1f) {
+        if ((transform.position - tentakel.transform.position).magnitude < 0.2f) {
             CancelTentakel();
-            _velocity = transform.position - tentakel.transform.position.normalized * acceleration;
+            _velocity = _pullDir.normalized * acceleration;
         }
     }
     private void MoveTentakel(Vector2 deltaV) {
         var tentakelPos = _tentakelRB.position;
-        if (Mouse.current.leftButton.isPressed) {
+        if (Mouse.current.leftButton.isPressed && state != KrakenState.PULLING) {
             
             _tentakelRB.MovePosition(Vector2.MoveTowards(tentakelPos, _camera.ScreenToWorldPoint(Mouse.current.position.ReadValue()), Time.deltaTime * tentakelSpeed));
         } else {
@@ -269,4 +287,8 @@ public class Datenkrake : MonoBehaviour {
             CancelTentakel();
     }
 
+    public void Eat() {
+        _eatTimer = eatFaceTime;
+        faceSpriteRenderer.sprite = eatFaceSprite;
+    }
 }

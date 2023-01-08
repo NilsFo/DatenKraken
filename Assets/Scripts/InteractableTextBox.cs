@@ -47,11 +47,12 @@ public class InteractableTextBox : MonoBehaviour
 
         characterList = new List<GameObject>();
         int i = -1;
+        InteractableTextCharacter previousChar = null;
         foreach (char c in textToDisplay.ToCharArray())
         {
             i++;
-            if (c.ToString().Trim().Length == 0)
-            {
+            if (c.ToString().Trim().Length == 0) {
+                previousChar = null;
                 continue;
             }
 
@@ -61,6 +62,11 @@ public class InteractableTextBox : MonoBehaviour
 
             InteractableTextCharacter textCharacter = newCharacterObj.GetComponent<InteractableTextCharacter>();
             textCharacter.SetChar(c);
+
+            if (previousChar != null) {
+                textCharacter.MakeAdjacent(previousChar);
+            }
+            previousChar = textCharacter;
         }
     }
 
