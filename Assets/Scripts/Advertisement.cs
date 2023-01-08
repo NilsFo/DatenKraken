@@ -63,12 +63,14 @@ public class Advertisement : MonoBehaviour
         if (_displayTimer > 0) {
             var f = _displayTimer / displayAnimTime;
             _displayTimer -= Time.deltaTime;
-            frame.transform.position = Vector2.Lerp(transform.localToWorldMatrix.MultiplyPoint3x4(Vector2.zero),popupSourceLocation, f);
+            Vector3 tmp = Vector2.Lerp(transform.localToWorldMatrix.MultiplyPoint3x4(Vector2.zero),popupSourceLocation, f);
+            tmp.z = -0.5f;
+            frame.transform.position = tmp;
             frame.size = Vector2.Lerp(_frameSize, Vector2.zero, f);
 
             if (_displayTimer <= 0) {
                 _displayTimer = 0;
-                frame.transform.localPosition = Vector2.zero;
+                frame.transform.localPosition = new Vector3(0,0,-0.5f);
                 myRenderer.enabled = true;
             }
         }
