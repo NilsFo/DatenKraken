@@ -32,6 +32,8 @@ public class Datenkrake : MonoBehaviour {
     private float _z;
     private Camera _camera;
 
+    private Vector2 _pullDir;
+
     private void OnEnable()
     {
         originalPosition = transform.position;
@@ -125,11 +127,12 @@ public class Datenkrake : MonoBehaviour {
     }
     private bool TryPull() {
         if (FindAd(tentakel.transform.position, out var col)) {
-            if (col != currentAdBox) {
+            //if (col != currentAdBox) {
                 state = KrakenState.PULLING;
+                _pullDir = tentakel.transform.position - transform.position;
                 SetAdBox(col);
                 return true;
-            }
+            //}
         }
         return false;
     }
@@ -179,14 +182,14 @@ public class Datenkrake : MonoBehaviour {
     }
     private void PullDatenkrakeToTentakel() {
         transform.position = Vector3.MoveTowards(transform.position, tentakel.transform.position, pullSpeed * Time.deltaTime);
-        if ((transform.position - tentakel.transform.position).magnitude < 0.1f) {
+        if ((transform.position - tentakel.transform.position).magnitude < 0.2f) {
             CancelTentakel();
-            _velocity = transform.position - tentakel.transform.position.normalized * acceleration;
+            _velocity = _pullDir.normalized * acceleration;
         }
     }
     private void MoveTentakel(Vector2 deltaV) {
         var tentakelPos = _tentakelRB.position;
-        if (Mouse.current.leftButton.isPressed) {
+        if (Mouse.current.leftButton.isPressed && state != KrakenState.PULLING) {
             
             _tentakelRB.MovePosition(Vector2.MoveTowards(tentakelPos, _camera.ScreenToWorldPoint(Mouse.current.position.ReadValue()), Time.deltaTime * tentakelSpeed));
         } else {
