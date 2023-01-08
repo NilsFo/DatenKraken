@@ -289,6 +289,8 @@ public class Datenkrake : MonoBehaviour {
         transform.position = originalPosition;
         if(state != KrakenState.WALKING)
             CancelTentakel();
+        
+        gameState.ShakeCamera(0.8f,0.7f);
     }
 
     public void Eat() {

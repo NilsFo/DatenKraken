@@ -163,15 +163,14 @@ public class NPCCursorAI : MonoBehaviour
         mySpriteRenderer.sprite = usedSprite;
 
         // Updating Music
-        if (state == AIState.WAITING_TO_CLICK)
-        {
-            if (_musicManager == null)
-            {
-                _musicManager = FindObjectOfType<MusicManager>();
-            }
-
-            _musicManager.RequestTemporaryBoostPicolo(0.1337f, skipFadeIn: false);
-        }
+        //if (state == AIState.WAITING_TO_CLICK)
+        //{
+        //    if (_musicManager == null)
+        //    {
+        //        _musicManager = FindObjectOfType<MusicManager>();
+        //    }
+        //    _musicManager.RequestTemporaryBoostPicolo(0.1337f, skipFadeIn: false);
+        //}
 
         // if (state==AIState.MOVING_TO_BUTTON)
         // {
@@ -179,7 +178,6 @@ public class NPCCursorAI : MonoBehaviour
         //     {
         //         _musicManager = FindObjectOfType<MusicManager>();
         //     }
-        //     
         //     _musicManager.RequestTemporaryBoostGlockenspiel(0.1337f, skipFadeIn: false);
         // }
 
@@ -209,7 +207,7 @@ public class NPCCursorAI : MonoBehaviour
                 closeButton.OnNPCClick();
                 if (_gameState != null)
                 {
-                    _gameState.ShakeCamera(0.1f, 0.08f);
+                    _gameState.ShakeCamera(0.2f, 0.15f);
                 }
             }
         }
