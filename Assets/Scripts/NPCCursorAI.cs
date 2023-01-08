@@ -80,10 +80,10 @@ public class NPCCursorAI : MonoBehaviour
         if (state == AIState.MOVING_TO_BUTTON || state == AIState.RETURN_HOME)
         {
             float velocity = movementSpeed * Time.deltaTime;
-            Vector2 targetPos = lockedOnCloseBT.transform.position;
-            if (state == AIState.RETURN_HOME)
+            Vector2 targetPos = startPos;
+            if (state == AIState.MOVING_TO_BUTTON)
             {
-                targetPos = startPos;
+                targetPos = lockedOnCloseBT.transform.position;
             }
 
             float dist = Vector2.Distance(transform.position, targetPos);
