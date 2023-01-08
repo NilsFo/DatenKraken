@@ -164,8 +164,12 @@ MonoBehaviour:
   myRenderer: {fileID: 273628848}
   enabledOnStart: 1
   adEnabled: 1
+  respawnTimer: -1
   adCollider: {fileID: 1587911819584601593}
   visualization: {fileID: 273628847}
+  frame: {fileID: 7008071988893859868}
+  displayAnimTime: 0.5
+  popupSourceLocation: {x: 0, y: 0}
   onHideAd:
     m_PersistentCalls:
       m_Calls:

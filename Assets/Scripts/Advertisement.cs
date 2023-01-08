@@ -17,17 +17,25 @@ public class Advertisement : MonoBehaviour
 
     public Collider2D adCollider;
     public Transform visualization;
+    public SpriteRenderer frame;
+    
+    public float displayAnimTime = 1f;
+    public Vector2 popupSourceLocation = new Vector2(0,0);
 
     public UnityEvent onHideAd;
     public UnityEvent onShowAd;
 
     private GameState _gameState;
 
+    private float _displayTimer;
+    private Vector2 _frameSize;
+
     private void OnEnable()
     {
         if (onHideAd == null) onHideAd = new UnityEvent();
         if (onShowAd == null) onShowAd = new UnityEvent();
         _gameState = FindObjectOfType<GameState>();
+        _frameSize = frame.size;
     }
 
     // Start is called before the first frame update
@@ -35,7 +43,7 @@ public class Advertisement : MonoBehaviour
     {
         if (enabledOnStart)
         {
-            DisplayAd();
+            ShowAd();
         }
         else
         {
@@ -51,6 +59,19 @@ public class Advertisement : MonoBehaviour
         {
             DisplayAd();
         }
+
+        if (_displayTimer > 0) {
+            var f = _displayTimer / displayAnimTime;
+            _displayTimer -= Time.deltaTime;
+            frame.transform.position = Vector2.Lerp(transform.localToWorldMatrix.MultiplyPoint3x4(Vector2.zero),popupSourceLocation, f);
+            frame.size = Vector2.Lerp(_frameSize, Vector2.zero, f);
+
+            if (_displayTimer <= 0) {
+                _displayTimer = 0;
+                frame.transform.localPosition = Vector2.zero;
+                myRenderer.enabled = true;
+            }
+        }
     }
 
     public void ChooseNextImg()
@@ -58,8 +79,7 @@ public class Advertisement : MonoBehaviour
         // TODO Cycle random images?
     }
 
-    public void DisplayAd()
-    {
+    private void ShowAd() {
         _respawn_progress = 0;
         if (!adEnabled)
         {
@@ -71,6 +91,16 @@ public class Advertisement : MonoBehaviour
         visualization.gameObject.SetActive(adEnabled);
 
         onShowAd.Invoke();
+    }
+    public void DisplayAd() {
+        // Prep animation
+        popupSourceLocation = _gameState.player.tentakel.transform.position;
+        _displayTimer = displayAnimTime;
+        frame.transform.position = popupSourceLocation;
+        frame.size = Vector2.zero;
+        myRenderer.enabled = false;
+        // show
+        ShowAd();
     }
 
     public void HideAd(bool notifyGameState = true)
@@ -96,7 +126,7 @@ public class Advertisement : MonoBehaviour
     {
         if (!adEnabled && enabledOnStart)
         {
-            DisplayAd();
+            ShowAd();
         }
     }
 }

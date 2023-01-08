@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class InteractableTextCharacter : MonoBehaviour
@@ -41,10 +40,11 @@ public class InteractableTextCharacter : MonoBehaviour
     // Update is called once per frame
     void Update() {
         if (_collected) {
-            var tentaclepos = gameState.player.tentakel.transform.position;
-            transform.position = Vector2.MoveTowards(transform.position, tentaclepos, collectSpeed * Time.deltaTime);
+            var collectionPos = gameState.player.transform.position;
+            transform.position = Vector2.MoveTowards(transform.position, collectionPos, collectSpeed * Time.deltaTime);
             collectSpeed += Time.deltaTime * 100;
-            if (((Vector2)tentaclepos - (Vector2)transform.position).magnitude < 0.1f) {
+            if (((Vector2)collectionPos - (Vector2)transform.position).magnitude < 0.1f) {
+                gameState.player.Eat();
                 Destroy(gameObject);
             }
         }

@@ -3,8 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
-using UnityEngine.UIElements;
 using Random = UnityEngine.Random;
 
 public class Datenkrake : MonoBehaviour {
@@ -12,7 +10,6 @@ public class Datenkrake : MonoBehaviour {
     public float dampening = 0.1f;
     public float maxSpeed = 10f;
     
-    [FormerlySerializedAs("tentakelAcceleration")]
     public float tentakelSpeed = 0.15f;
     public float pullSpeed = 20f;
 
@@ -34,6 +31,13 @@ public class Datenkrake : MonoBehaviour {
 
     private Vector2 _pullDir;
 
+    public SpriteRenderer faceSpriteRenderer;
+    private Sprite _defaultFaceSprite;
+    public Sprite eatFaceSprite;
+    public float eatFaceTime = 0.1f;
+
+    private float _eatTimer;
+
     private void OnEnable()
     {
         originalPosition = transform.position;
@@ -53,10 +57,21 @@ public class Datenkrake : MonoBehaviour {
         }
 
         _z = transform.position.z;
+
+        _defaultFaceSprite = faceSpriteRenderer.sprite;
     }
 
     // Update is called once per frame
     void Update() {
+        
+        // eat stuff
+        if (_eatTimer > 0) {
+            _eatTimer -= Time.deltaTime;
+            if (_eatTimer <= 0) {
+                faceSpriteRenderer.sprite = _defaultFaceSprite;
+            }
+        }
+
         float x = 0, y = 0;
         Vector3 krakeDeltaV = Vector3.zero;
         Vector3 tentakelDeltaV = Vector3.zero;
@@ -272,4 +287,8 @@ public class Datenkrake : MonoBehaviour {
             CancelTentakel();
     }
 
+    public void Eat() {
+        _eatTimer = eatFaceTime;
+        faceSpriteRenderer.sprite = eatFaceSprite;
+    }
 }
