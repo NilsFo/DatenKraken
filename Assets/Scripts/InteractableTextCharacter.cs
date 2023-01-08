@@ -47,6 +47,9 @@ public class InteractableTextCharacter : MonoBehaviour
                 gameState.player.Eat();
                 Destroy(gameObject);
             }
+
+            // Setting Music
+            gameState.musicManager.RequestTemporaryBoostTrommeln(1.1337f, skipFadeIn: false);
         }
         _animTimer += Time.deltaTime;
         if (_animTimer > animInterval)
