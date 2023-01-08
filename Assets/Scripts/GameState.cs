@@ -30,6 +30,10 @@ public class GameState : MonoBehaviour
     public GameObject backToMenuTF;
     public bool IsBackToMenuTimeWindow => backToMainMenuTimer > 0;
 
+    [Header("Win?")] public string nextLevelName = "";
+    public float nextLevelTimer = 2.0f;
+    private float _nextLevelProgress = 0.0f;
+
     [Header("Tutorial")] public bool isTutorialLevel = false;
 
     [Header("Music")] public GameObject musicManagerPrefab;
@@ -77,11 +81,25 @@ public class GameState : MonoBehaviour
             _cameraShakeDurationTimer += Time.deltaTime;
         }
 
+        if (playerState == PlayerState.WIN)
+        {
+            _nextLevelProgress += Time.deltaTime;
+            if (_nextLevelProgress >= nextLevelTimer)
+            {
+                NextLevel();
+            }
+        }
+
         // Back To MainMenu
         backToMainMenuTimer = backToMainMenuTimer - Time.deltaTime;
         if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Backspace))
             // TODO input system?
         {
+            if (playerState == PlayerState.WIN)
+            {
+                BackToMainMenu();
+            }
+
             if (IsBackToMenuTimeWindow)
             {
                 BackToMainMenu();
@@ -107,6 +125,11 @@ public class GameState : MonoBehaviour
         }
     }
 
+    private void NextLevel()
+    {
+        SceneManager.LoadScene(nextLevelName);
+    }
+
     public void IncreaseObjectiveTarget()
     {
         objectiveTarget++;
@@ -119,7 +142,6 @@ public class GameState : MonoBehaviour
 
     private void OnGameStateChange()
     {
-        // TODO Implement
         switch (playerState)
         {
             case PlayerState.WIN:
@@ -127,6 +149,9 @@ public class GameState : MonoBehaviour
                 break;
             case PlayerState.PLAYING:
                 Debug.Log("You are now playing.");
+                break;
+            case PlayerState.PAUSED:
+                Debug.LogWarning("The state is set to 'paused' but nothing happens!");
                 break;
             default:
                 Debug.LogWarning("WARNING! UNKNOWN STATE!");

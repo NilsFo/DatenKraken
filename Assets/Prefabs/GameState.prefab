@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2524d7fd0204af4ca0c6fe6fa00b132, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerState: 0
+  playerState: 1
   player: {fileID: 0}
   cursor: {fileID: 0}
   objectiveTarget: 0

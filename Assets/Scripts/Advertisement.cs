@@ -12,6 +12,9 @@ public class Advertisement : MonoBehaviour
     public bool enabledOnStart = true;
     public bool adEnabled = true;
 
+    public float respawnTimer = -1;
+    private float _respawn_progress = 0f;
+
     public Collider2D adCollider;
     public Transform visualization;
 
@@ -43,6 +46,11 @@ public class Advertisement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        _respawn_progress += Time.deltaTime;
+        if (respawnTimer > 0 && _respawn_progress >= respawnTimer && !adEnabled)
+        {
+            DisplayAd();
+        }
     }
 
     public void ChooseNextImg()
@@ -52,6 +60,7 @@ public class Advertisement : MonoBehaviour
 
     public void DisplayAd()
     {
+        _respawn_progress = 0;
         if (!adEnabled)
         {
             ChooseNextImg();
@@ -66,6 +75,7 @@ public class Advertisement : MonoBehaviour
 
     public void HideAd(bool notifyGameState = true)
     {
+        _respawn_progress = 0;
         adEnabled = false;
         adCollider.enabled = adEnabled;
         visualization.gameObject.SetActive(adEnabled);
@@ -75,7 +85,10 @@ public class Advertisement : MonoBehaviour
         if (notifyGameState)
         {
             // Checking for player
-            _gameState.player.OnAdvertismentHidden();
+            if (_gameState != null)
+            {
+                _gameState.player.OnAdvertismentHidden();
+            }
         }
     }
 

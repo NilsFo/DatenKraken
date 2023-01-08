@@ -41,7 +41,8 @@ public class NPCCursorAI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _gameState.cursor = this;
+        if (_gameState != null) _gameState.cursor = this;
+
         startPos = transform.position;
         state = AIState.LOOKING_FOR_BUTTON;
         _lastknownState = state;
@@ -52,9 +53,12 @@ public class NPCCursorAI : MonoBehaviour
     void Update()
     {
         // Checking if game over
-        if (_gameState.playerState == GameState.PlayerState.WIN)
+        if (_gameState != null)
         {
-            state = AIState.RETURN_HOME;
+            if (_gameState.playerState == GameState.PlayerState.WIN)
+            {
+                state = AIState.RETURN_HOME;
+            }
         }
 
         // Updating states: Looking for button

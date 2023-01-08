@@ -84,16 +84,21 @@ public class AdvertismentCloseButton : MonoBehaviour
     {
         myVisuals.SetActive(true);
         NotifyGameState();
+        ResetState();
     }
 
     public void OnHideAd()
     {
         myVisuals.SetActive(false);
+        ResetState();
     }
 
     public void NotifyGameState()
     {
-        _gameState.OnCloseableAdAppeared(this);
+        if (_gameState != null)
+        {
+            _gameState.OnCloseableAdAppeared(this);
+        }
     }
 
     public void ResetState()
