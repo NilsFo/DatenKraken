@@ -45,6 +45,13 @@ public class WebsiteButton : MonoBehaviour
         myVisuals.SetActive(false);
     }
 
+    public void EnableButton()
+    {
+        clickable = true;
+        myParticles.Play();
+        myVisuals.SetActive(true);
+    }
+    
     // Update is called once per frame
     void Update()
     {
