@@ -3,12 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class AdvertismentCloseButton : MonoBehaviour
 {
     public Advertisement myAdvertisement;
     public GameObject myVisuals;
     private GameState _gameState;
+
+    public UnityEvent onClose;
 
     public enum ClickState
     {
@@ -31,6 +34,8 @@ public class AdvertismentCloseButton : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (onClose == null)
+            onClose = new UnityEvent();
         ResetState();
     }
 
@@ -78,6 +83,7 @@ public class AdvertismentCloseButton : MonoBehaviour
     public void Close()
     {
         myAdvertisement.HideAd();
+        onClose.Invoke();
     }
 
     public void OnShowAd()
