@@ -195,7 +195,7 @@ public class GameState : MonoBehaviour
         Vector3 pos = CMCameraFocus.transform.localPosition;
         pos.x = 0;
         pos.y = 0;
-        pos.z = 0;
+        // pos.z = 0;
 
         if (cameraShakeDuration > 0 && _cameraShakeDurationTimer < cameraShakeDuration)
         {
