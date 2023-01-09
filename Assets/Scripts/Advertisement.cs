@@ -36,12 +36,12 @@ public class Advertisement : MonoBehaviour
         if (onHideAd == null) onHideAd = new UnityEvent();
         if (onShowAd == null) onShowAd = new UnityEvent();
         _gameState = FindObjectOfType<GameState>();
-        _frameSize = frame.size;
     }
 
     // Start is called before the first frame update
     void Start()
     {
+        _frameSize = frame.size;
         if (enabledOnStart)
         {
             ShowAd();
@@ -72,6 +72,7 @@ public class Advertisement : MonoBehaviour
             if (_displayTimer <= 0) {
                 _displayTimer = 0;
                 frame.transform.localPosition = new Vector3(0,0,-0.5f);
+                frame.size = _frameSize;
                 myRenderer.enabled = true;
             }
         }
