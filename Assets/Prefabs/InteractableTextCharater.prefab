@@ -52,7 +52,10 @@ MonoBehaviour:
   gameState: {fileID: 0}
   cameraShakeMagnitude: 0.1
   cameraShakeDuration: 0.08
+  collectSpeed: 10
   animInterval: 3
+  adjacentChars: []
+  myParentTextBox: {fileID: 0}
 --- !u!58 &4660293372151732915
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -233,8 +236,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: N
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ee921ee505c072041aa41d29e82dced5, type: 2}
+  m_sharedMaterial: {fileID: -8567782970461798308, guid: ee921ee505c072041aa41d29e82dced5, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

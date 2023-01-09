@@ -313,12 +313,14 @@ public class Datenkrake : MonoBehaviour {
 
     public void OnAdEnter()
     {
+        //TODO call me <3
         gameState.ShakeCamera(0.1f,0.15f);
         DisplayPoof();
     }
 
     public void OnAdLeave()
     {
+        //TODO call me <3
         gameState.ShakeCamera(0.1f,0.15f);
         DisplayPoof();
     }

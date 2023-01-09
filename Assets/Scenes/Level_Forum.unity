@@ -2925,7 +2925,7 @@ PrefabInstance:
       objectReference: {fileID: 328770608}
     - target: {fileID: 5873826806289413833, guid: b045aab7c65048942bc6b7f28de8be9c, type: 3}
       propertyPath: nextLevelName
-      value: Level_Art
+      value: Level_SocialMedia
       objectReference: {fileID: 0}
     - target: {fileID: 5873826806289413833, guid: b045aab7c65048942bc6b7f28de8be9c, type: 3}
       propertyPath: levelMusicProfile
