@@ -730,6 +730,7 @@ MonoBehaviour:
   tentakel: {fileID: 5199823746954416533}
   state: 0
   gameState: {fileID: 0}
+  krakenPoofPrefab: {fileID: 5667140123913890099, guid: 16f8b04f08ee162449f901dba5f6d7cf, type: 3}
   currentAdBox: {fileID: 0}
   faceSpriteRenderer: {fileID: 4697783161878402067}
   eatFaceSprite: {fileID: 21300000, guid: 4917375549660c448a99b264bb49f09b, type: 3}

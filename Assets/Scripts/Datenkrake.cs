@@ -22,6 +22,7 @@ public class Datenkrake : MonoBehaviour {
     }
     public KrakenState state = KrakenState.WALKING;
     public GameState gameState;
+    public GameObject krakenPoofPrefab;
 
     private Vector2 _velocity;
     public Collider2D currentAdBox;
@@ -70,6 +71,12 @@ public class Datenkrake : MonoBehaviour {
             if (_eatTimer <= 0) {
                 faceSpriteRenderer.sprite = _defaultFaceSprite;
             }
+        }
+
+        // happy when win
+        if (gameState.playerState == GameState.PlayerState.WIN)
+        {
+            faceSpriteRenderer.sprite = eatFaceSprite;
         }
 
         float x = 0, y = 0;
@@ -295,10 +302,35 @@ public class Datenkrake : MonoBehaviour {
         transform.position = originalPosition;
         if(state != KrakenState.WALKING)
             CancelTentakel();
+        
+        gameState.ShakeCamera(0.8f,0.7f);
     }
 
     public void Eat() {
         _eatTimer = eatFaceTime;
         faceSpriteRenderer.sprite = eatFaceSprite;
     }
+
+    public void OnAdEnter()
+    {
+        gameState.ShakeCamera(0.1f,0.15f);
+        DisplayPoof();
+    }
+
+    public void OnAdLeave()
+    {
+        gameState.ShakeCamera(0.1f,0.15f);
+        DisplayPoof();
+    }
+    
+    [ContextMenu("Poof")]
+    public void DisplayPoof()
+    {
+        var pos = transform.position;
+        var poof = Instantiate(krakenPoofPrefab);
+        pos.z = pos.z + 1f;
+        poof.transform.position = pos;
+    }
+    
+    
 }

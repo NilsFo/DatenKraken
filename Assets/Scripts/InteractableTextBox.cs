@@ -13,7 +13,10 @@ public class InteractableTextBox : MonoBehaviour
     [Header("Character Settings")] public float characterOffset = 0.8f;
     private float lastKnownOffset;
 
+    private GameState _gameState;
     private List<GameObject> characterList;
+    public int charactersEaten;
+    private bool stingerPlayed;
 
     private void Awake()
     {
@@ -23,6 +26,8 @@ public class InteractableTextBox : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        stingerPlayed = false;
+        _gameState = FindObjectOfType<GameState>();
         BuildCharacters();
         lastKnownOffset = characterOffset;
     }
@@ -34,6 +39,20 @@ public class InteractableTextBox : MonoBehaviour
         {
             BuildCharacters();
             lastKnownOffset = characterOffset;
+        }
+    }
+
+    private void LateUpdate()
+    {
+        if (!stingerPlayed && charactersEaten == characterList.Count)
+        {
+            print("Whole box has been eaten!");
+            stingerPlayed = true;
+
+            if (_gameState.playerState != GameState.PlayerState.WIN)
+            {
+                _gameState.stingerGood.Play();
+            }
         }
     }
 
@@ -51,7 +70,8 @@ public class InteractableTextBox : MonoBehaviour
         foreach (char c in textToDisplay.ToCharArray())
         {
             i++;
-            if (c.ToString().Trim().Length == 0) {
+            if (c.ToString().Trim().Length == 0)
+            {
                 previousChar = null;
                 continue;
             }
@@ -62,12 +82,20 @@ public class InteractableTextBox : MonoBehaviour
 
             InteractableTextCharacter textCharacter = newCharacterObj.GetComponent<InteractableTextCharacter>();
             textCharacter.SetChar(c);
+            textCharacter.myParentTextBox = this;
 
-            if (previousChar != null) {
+            if (previousChar != null)
+            {
                 textCharacter.MakeAdjacent(previousChar);
             }
+
             previousChar = textCharacter;
         }
+    }
+
+    public void ReportEaten()
+    {
+        charactersEaten++;
     }
 
     private void OnDrawGizmos()
@@ -79,9 +107,9 @@ public class InteractableTextBox : MonoBehaviour
             GUIStyle style = new GUIStyle();
             style.normal.textColor = Color.black;
             style.fontSize = 15;
-            
+
             Handles.DrawWireDisc(wireOrigin, Vector3.forward, 0.5f);
-            Handles.Label(transform.position, "Text Spawner: '" + textToDisplay + "'",style);
+            Handles.Label(transform.position, "Text Spawner: '" + textToDisplay + "'", style);
         }
 #endif
     }

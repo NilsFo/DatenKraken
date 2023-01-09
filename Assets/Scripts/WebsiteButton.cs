@@ -5,8 +5,19 @@ using UnityEngine.Events;
 
 public class WebsiteButton : MonoBehaviour
 {
+    public GameObject cookiePoofPrefab;
+
+    public SpriteRenderer myRenderer;
+    public Sprite spriteDefault;
+    public Sprite spriteClicked;
+    public float clickedTime = 0.69f;
+    private float _clickTimeProgress = 0;
+
+    public AudioSource buttonClickSound;
+
     public ParticleSystem myParticles;
     public GameObject myVisuals;
+    private GameState _gameState;
 
     public bool clickableOnce = false;
     private bool clickable;
@@ -16,6 +27,7 @@ public class WebsiteButton : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        _gameState = FindObjectOfType<GameState>();
         clickable = true;
         if (clickButton == null)
             clickButton = new UnityEvent();
@@ -26,7 +38,10 @@ public class WebsiteButton : MonoBehaviour
     {
         if (clickable)
         {
+            _clickTimeProgress = clickedTime;
             clickButton.Invoke();
+            _gameState.ShakeCamera(0.15f, 0.1337f);
+            buttonClickSound.Play();
             if (clickableOnce)
             {
                 DisableButton();
@@ -43,6 +58,7 @@ public class WebsiteButton : MonoBehaviour
         clickable = false;
         myParticles.Stop();
         myVisuals.SetActive(false);
+        DisplayPoof();
     }
 
     public void EnableButton()
@@ -51,9 +67,27 @@ public class WebsiteButton : MonoBehaviour
         myParticles.Play();
         myVisuals.SetActive(true);
     }
-    
+
     // Update is called once per frame
     void Update()
     {
+        _clickTimeProgress -= Time.deltaTime;
+
+        Sprite selectedSprite = spriteDefault;
+        if (_clickTimeProgress > 0)
+        {
+            selectedSprite = spriteClicked;
+        }
+
+        myRenderer.sprite = selectedSprite;
+    }
+
+    [ContextMenu("Poof")]
+    public void DisplayPoof()
+    {
+        var pos = transform.position;
+        var poof = Instantiate(cookiePoofPrefab);
+        pos.z = pos.z + 1f;
+        poof.transform.position = pos;
     }
 }
