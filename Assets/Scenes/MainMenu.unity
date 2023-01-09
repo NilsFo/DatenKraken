@@ -571,7 +571,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6845949642453747535, guid: 7df6632182ce23743a465de387b65af8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 27.62
+      value: 50.7
       objectReference: {fileID: 0}
     - target: {fileID: 6845949642453747535, guid: 7df6632182ce23743a465de387b65af8, type: 3}
       propertyPath: m_LocalPosition.z
@@ -832,7 +832,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1150160922413458770, guid: deb43789a6e83cd4286b8607f4a4e61f, type: 3}
       propertyPath: m_text
-      value: 'Level: Stream'
+      value: Live Stream
       objectReference: {fileID: 0}
     - target: {fileID: 2160442292717207122, guid: deb43789a6e83cd4286b8607f4a4e61f, type: 3}
       propertyPath: m_Pivot.x
@@ -957,7 +957,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1150160922413458770, guid: deb43789a6e83cd4286b8607f4a4e61f, type: 3}
       propertyPath: m_text
-      value: 'Level: Art'
+      value: Social Media
       objectReference: {fileID: 0}
     - target: {fileID: 2160442292717207122, guid: deb43789a6e83cd4286b8607f4a4e61f, type: 3}
       propertyPath: m_Pivot.x
@@ -1053,7 +1053,7 @@ PrefabInstance:
       objectReference: {fileID: 1308419383}
     - target: {fileID: 8313344102332276648, guid: deb43789a6e83cd4286b8607f4a4e61f, type: 3}
       propertyPath: levelName
-      value: Level_Art
+      value: Level_SocialMedia
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: deb43789a6e83cd4286b8607f4a4e61f, type: 3}
@@ -1082,7 +1082,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1150160922413458770, guid: deb43789a6e83cd4286b8607f4a4e61f, type: 3}
       propertyPath: m_text
-      value: 'Level: ImageB'
+      value: Forum
       objectReference: {fileID: 0}
     - target: {fileID: 2160442292717207122, guid: deb43789a6e83cd4286b8607f4a4e61f, type: 3}
       propertyPath: m_Pivot.x
@@ -1178,7 +1178,7 @@ PrefabInstance:
       objectReference: {fileID: 1423844694}
     - target: {fileID: 8313344102332276648, guid: deb43789a6e83cd4286b8607f4a4e61f, type: 3}
       propertyPath: levelName
-      value: Level_ImageBoard
+      value: Level_Forum
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: deb43789a6e83cd4286b8607f4a4e61f, type: 3}
@@ -1799,7 +1799,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1150160922413458770, guid: deb43789a6e83cd4286b8607f4a4e61f, type: 3}
       propertyPath: m_text
-      value: Level_Search
+      value: Search
       objectReference: {fileID: 0}
     - target: {fileID: 2160442292717207122, guid: deb43789a6e83cd4286b8607f4a4e61f, type: 3}
       propertyPath: m_Pivot.x
@@ -1961,7 +1961,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1150160922413458770, guid: deb43789a6e83cd4286b8607f4a4e61f, type: 3}
       propertyPath: m_text
-      value: VideoStream
+      value: VOD
       objectReference: {fileID: 0}
     - target: {fileID: 2160442292717207122, guid: deb43789a6e83cd4286b8607f4a4e61f, type: 3}
       propertyPath: m_Pivot.x
