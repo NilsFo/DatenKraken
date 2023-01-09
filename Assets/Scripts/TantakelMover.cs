@@ -79,7 +79,7 @@ public class TantakelMover : MonoBehaviour {
             var posTowards = Vector2.MoveTowards(endEffector.transform.position, t, moveSpeed/2 * Time.deltaTime);
             endEffector.MovePosition(posTowards);
         } else {
-            Vector2 t = (Vector2)krake.transform.position -v.normalized * 3f + (Vector2)target.localPosition.normalized * 1.5f;
+            Vector2 t = (Vector2)krake.transform.position -v.normalized * 3.5f + (Vector2)target.localPosition.normalized * 1.0f;
             var posTowards = Vector2.MoveTowards(endEffector.transform.position, t, moveSpeed * Time.deltaTime);
             endEffector.MovePosition(posTowards);
         }

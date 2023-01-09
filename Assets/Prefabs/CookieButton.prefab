@@ -120,7 +120,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 2
-  magnitude: 0.001337
+  magnitude: 0.25
 --- !u!1 &2677260860470111495
 GameObject:
   m_ObjectHideFlags: 0
