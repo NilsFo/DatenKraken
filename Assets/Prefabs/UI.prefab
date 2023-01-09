@@ -256,7 +256,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4186907773834103757
 RectTransform:
   m_ObjectHideFlags: 0
@@ -340,7 +340,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4241236568791441428
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8050,6 +8050,14 @@ PrefabInstance:
     - target: {fileID: 669432412006455670, guid: 1e9c2a2161cd7b346a28d3ac63272fce, type: 3}
       propertyPath: m_Name
       value: UILogger
+      objectReference: {fileID: 0}
+    - target: {fileID: 924021034010658272, guid: 1e9c2a2161cd7b346a28d3ac63272fce, type: 3}
+      propertyPath: showFPS
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 924021034010658272, guid: 1e9c2a2161cd7b346a28d3ac63272fce, type: 3}
+      propertyPath: showLog
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6993276340950299834, guid: 1e9c2a2161cd7b346a28d3ac63272fce, type: 3}
       propertyPath: m_Pivot.x
