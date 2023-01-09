@@ -17,13 +17,12 @@ public class Datenkrake : MonoBehaviour {
     private Rigidbody2D _tentakelRB;
     private Vector2 originalPosition;
 
-    private AudioSource stingerGood;
-
     public enum KrakenState {
         WALKING, GRABBING, PULLING
     }
     public KrakenState state = KrakenState.WALKING;
     public GameState gameState;
+    public GameObject krakenPoofPrefab;
 
     private Vector2 _velocity;
     public Collider2D currentAdBox;
@@ -50,7 +49,6 @@ public class Datenkrake : MonoBehaviour {
         _camera = Camera.main;
         _tentakelRB = tentakel.GetComponent<Rigidbody2D>();
         gameState = FindObjectOfType<GameState>();
-        stingerGood = gameState.stingerGood;
         
         bool success = FindAd(transform.position, out var col);
         if (success) {
@@ -73,6 +71,12 @@ public class Datenkrake : MonoBehaviour {
             if (_eatTimer <= 0) {
                 faceSpriteRenderer.sprite = _defaultFaceSprite;
             }
+        }
+
+        // happy when win
+        if (gameState.playerState == GameState.PlayerState.WIN)
+        {
+            faceSpriteRenderer.sprite = eatFaceSprite;
         }
 
         float x = 0, y = 0;
@@ -300,4 +304,27 @@ public class Datenkrake : MonoBehaviour {
         _eatTimer = eatFaceTime;
         faceSpriteRenderer.sprite = eatFaceSprite;
     }
+
+    public void OnAdEnter()
+    {
+        gameState.ShakeCamera(0.1f,0.15f);
+        DisplayPoof();
+    }
+
+    public void OnAdLeave()
+    {
+        gameState.ShakeCamera(0.1f,0.15f);
+        DisplayPoof();
+    }
+    
+    [ContextMenu("Poof")]
+    public void DisplayPoof()
+    {
+        var pos = transform.position;
+        var poof = Instantiate(krakenPoofPrefab);
+        pos.z = pos.z + 1f;
+        poof.transform.position = pos;
+    }
+    
+    
 }

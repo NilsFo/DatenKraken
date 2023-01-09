@@ -5,6 +5,8 @@ using UnityEngine.Events;
 
 public class WebsiteButton : MonoBehaviour
 {
+    public GameObject cookiePoofPrefab;
+
     public SpriteRenderer myRenderer;
     public Sprite spriteDefault;
     public Sprite spriteClicked;
@@ -56,6 +58,7 @@ public class WebsiteButton : MonoBehaviour
         clickable = false;
         myParticles.Stop();
         myVisuals.SetActive(false);
+        DisplayPoof();
     }
 
     public void EnableButton()
@@ -77,5 +80,14 @@ public class WebsiteButton : MonoBehaviour
         }
 
         myRenderer.sprite = selectedSprite;
+    }
+
+    [ContextMenu("Poof")]
+    public void DisplayPoof()
+    {
+        var pos = transform.position;
+        var poof = Instantiate(cookiePoofPrefab);
+        pos.z = pos.z + 1f;
+        poof.transform.position = pos;
     }
 }
