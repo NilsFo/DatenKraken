@@ -185,6 +185,7 @@ public class GameState : MonoBehaviour
     public void Win()
     {
         playerState = PlayerState.WIN;
+        FindObjectOfType<VignetteMask>()?.PlayOutro();
         ResetCameraShake();
     }
 

@@ -18,7 +18,7 @@ EditorBuildSettings:
     path: Assets/Scenes/PH.unity
     guid: 0cc4eebba6b75b04e9b65aa278ee86e0
   - enabled: 1
-    path: Assets/Scenes/Level_ImageBoard.unity
+    path: Assets/Scenes/Level_Forum.unity
     guid: b63a698de5c18b54d8afe8acb9443f7b
   - enabled: 1
     path: Assets/Scenes/Level_LiveStream.unity
