@@ -17,6 +17,8 @@ public class Datenkrake : MonoBehaviour {
     private Rigidbody2D _tentakelRB;
     private Vector2 originalPosition;
 
+    private AudioSource stingerGood;
+
     public enum KrakenState {
         WALKING, GRABBING, PULLING
     }
@@ -48,6 +50,7 @@ public class Datenkrake : MonoBehaviour {
         _camera = Camera.main;
         _tentakelRB = tentakel.GetComponent<Rigidbody2D>();
         gameState = FindObjectOfType<GameState>();
+        stingerGood = gameState.stingerGood;
         
         bool success = FindAd(transform.position, out var col);
         if (success) {

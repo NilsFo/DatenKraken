@@ -40,6 +40,10 @@ public class GameState : MonoBehaviour
     public MusicManager musicManager;
     public MusicManager.MusicProfile levelMusicProfile = MusicManager.MusicProfile.SILENCE;
 
+    [Header("Sounds")] public AudioSource stingerGood;
+    public AudioSource stingerBad;
+    public AudioSource stingerLevelWin;
+
     // Camera Shake
     [Header("Camera Shake")] public GameObject CMCameraFocus;
     public float cameraShakeMagnitude = 0f;
@@ -90,6 +94,11 @@ public class GameState : MonoBehaviour
             }
         }
 
+        // Updating volume
+        stingerBad.volume = musicManager.globalUserVolume * MusicManager.GLOBAL_GAME_SOUNDS_VOLUME;
+        stingerGood.volume = musicManager.globalUserVolume * MusicManager.GLOBAL_GAME_SOUNDS_VOLUME;
+        stingerLevelWin.volume = musicManager.globalUserVolume * MusicManager.GLOBAL_GAME_SOUNDS_VOLUME;
+
         // Back To MainMenu
         backToMainMenuTimer = backToMainMenuTimer - Time.deltaTime;
         if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Backspace))
@@ -115,14 +124,25 @@ public class GameState : MonoBehaviour
         objectiveProgressText.text = "Data harvested: " + objectiveCurrent + "/" + objectiveTarget;
         if (playerState == PlayerState.PLAYING)
         {
-            if (objectiveTarget > 0)
+            if (CheckWinCondition())
             {
-                if (objectiveCurrent >= objectiveTarget)
-                {
-                    playerState = PlayerState.WIN;
-                }
+                playerState = PlayerState.WIN;
+                musicManager.SetMusicProfile(MusicManager.MusicProfile.SILENCE);
             }
         }
+    }
+
+    public bool CheckWinCondition()
+    {
+        if (objectiveTarget > 0)
+        {
+            if (objectiveCurrent >= objectiveTarget)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private void NextLevel()
@@ -146,6 +166,8 @@ public class GameState : MonoBehaviour
         {
             case PlayerState.WIN:
                 Debug.Log("A WINNER IS YOU!");
+                stingerGood.Stop();
+                stingerLevelWin.Play();
                 break;
             case PlayerState.PLAYING:
                 Debug.Log("You are now playing.");
@@ -229,7 +251,7 @@ public class GameState : MonoBehaviour
 
     public void SoftResetLevel()
     {
-        ResetCameraShake();
+        stingerBad.Play();
 
         SoftResetable[] resetables = FindObjectsOfType<SoftResetable>();
         foreach (SoftResetable resetable in resetables)

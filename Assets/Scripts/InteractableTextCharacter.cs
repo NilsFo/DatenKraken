@@ -23,6 +23,7 @@ public class InteractableTextCharacter : MonoBehaviour
     private bool _collected;
 
     public List<InteractableTextCharacter> adjacentChars;
+    public InteractableTextBox myParentTextBox;
 
     private void Awake()
     {
@@ -92,6 +93,7 @@ public class InteractableTextCharacter : MonoBehaviour
     {
         gameState.IncreaseObjectiveProgress();
         gameState.ShakeCamera(cameraShakeMagnitude, cameraShakeDuration);
+        myParentTextBox.ReportEaten();
     }
 
     private void CollectAdjacent() {

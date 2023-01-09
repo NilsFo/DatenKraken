@@ -6,7 +6,8 @@ using UnityEngine.Rendering.Universal.Internal;
 
 public class MusicManager : MonoBehaviour
 {
-    public static readonly float GLOBAL_GAME_VOLUME = 0.1f;
+    public static readonly float GLOBAL_GAME_MUSIC_VOLUME = 0.25f;
+    public static readonly float GLOBAL_GAME_SOUNDS_VOLUME = 0.15f;
 
     public float globalUserVolume = 0.5f;
     public float volumeChangeRate = 0.35f;
@@ -159,7 +160,7 @@ public class MusicManager : MonoBehaviour
             audioSource.volumeCurrent = volumeCurrent;
 
             // Applying global volume and setting the audio source volume
-            audioSource.audioSource.volume = volumeCurrent * globalUserVolume * GLOBAL_GAME_VOLUME;
+            audioSource.audioSource.volume = volumeCurrent * globalUserVolume * GLOBAL_GAME_MUSIC_VOLUME;
         }
 
         if (_lastKnownProfile != currentProfile)

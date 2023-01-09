@@ -184,8 +184,8 @@ public class NPCCursorAI : MonoBehaviour
         // Checking if state has changed
         if (_lastknownState != state)
         {
+            OnStateChanged(_lastknownState, state);
             _lastknownState = state;
-            OnStateChanged();
         }
     }
 
@@ -218,7 +218,7 @@ public class NPCCursorAI : MonoBehaviour
         return state == AIState.CLICKING;
     }
 
-    private void OnStateChanged()
+    private void OnStateChanged(AIState previousState, AIState newState)
     {
         ResetLookingForButtonTimer();
         _clickAnimationTimer = 0;
@@ -255,6 +255,15 @@ public class NPCCursorAI : MonoBehaviour
 
                 break;
             case AIState.LOOKING_FOR_BUTTON:
+                if (previousState == AIState.CLICKING || previousState == AIState.WAITING_TO_CLICK)
+                {
+                    List<AdvertismentCloseButton> buttons = GetAllWebsiteButtons();
+                    if (buttons.Count == 0)
+                    {
+                        state = AIState.RETURN_HOME;
+                    }
+                }
+
                 break;
             case AIState.RETURN_HOME:
                 break;
@@ -301,7 +310,13 @@ public class NPCCursorAI : MonoBehaviour
         AdvertismentCloseButton[] buttons = FindObjectsOfType<AdvertismentCloseButton>();
         if (buttons != null)
         {
-            foundButtons.AddRange(buttons);
+            foreach (var advertismentCloseButton in buttons)
+            {
+                if (advertismentCloseButton.myVisuals.activeSelf)
+                {
+                    foundButtons.AddRange(buttons);
+                }
+            }
         }
 
         return foundButtons;
