@@ -35,4 +35,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Level_VideoStream.unity
     guid: d46970b4c3385c246bb99ac8fa609893
+  - enabled: 1
+    path: Assets/Scenes/Ending.unity
+    guid: 6f2a4d66dce64548ae2091902f8349a1
   m_configObjects: {}
