@@ -8,19 +8,20 @@ using UnityEngine.Rendering.Universal;
 
 public class VideoMidrollPlayer : MonoBehaviour
 {
-    public float adTime = 5.0f;
+    public float adTime = 15.0f;
+    public float skipBTVisibleAt = 5.0f;
+
     private float adTimeProgress = 0;
     public Advertisement midRollAd;
     public Advertisement bannerAd;
     public TMP_Text adOverText;
     public WebsiteButton myWebsiteButton;
-    private GameObject adOverHolder;
+    public GameObject adOverHolder;
 
     private bool showingMidRoll;
 
     private void Awake()
     {
-        adOverHolder = adOverText.gameObject;
         showingMidRoll = false;
     }
 
@@ -34,11 +35,16 @@ public class VideoMidrollPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        adOverHolder.SetActive(showingMidRoll);
+        adOverHolder.SetActive(false);
         if (showingMidRoll)
         {
             adTimeProgress += Time.deltaTime;
             adOverText.text = "Video plays in " + GetFormattedCountdown() + "s";
+
+            if (adTimeProgress > skipBTVisibleAt)
+            {
+                adOverHolder.SetActive(true);
+            }
 
             if (adTimeProgress > adTime)
             {
