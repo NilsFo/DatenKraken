@@ -116,13 +116,13 @@ public class Datenkrake : MonoBehaviour {
 
         
         
-        if (state == KrakenState.WALKING && gameState.ControlsEnabled()) {
+        if (state is KrakenState.WALKING or KrakenState.GRABBING && gameState.ControlsEnabled()) {
             krakeDeltaV = new Vector3(x, y, 0).normalized;
         }
 
-        if (state == KrakenState.GRABBING && gameState.ControlsEnabled()) {
+        /*if (state == KrakenState.GRABBING && gameState.ControlsEnabled()) {
             tentakelDeltaV = new Vector3(x, y, 0).normalized;
-        }
+        }*/
 
         if (state != KrakenState.PULLING) {
             MoveDatenkrake(krakeDeltaV);
@@ -211,13 +211,19 @@ public class Datenkrake : MonoBehaviour {
     }
     private void MoveTentakel(Vector2 deltaV) {
         var tentakelPos = _tentakelRB.position;
-        if (Mouse.current.leftButton.isPressed && state != KrakenState.PULLING && gameState.ControlsEnabled()) {
+        if (gameState.ControlsEnabled() && state != KrakenState.PULLING) {
             Vector2 targetPos = _camera.ScreenToWorldPoint(Mouse.current.position.ReadValue());
             Vector2 krakenPos = transform.position;
             var d = (targetPos - krakenPos).magnitude;
-            if(d > 5f)
-                targetPos = (targetPos - krakenPos).normalized * 5f + krakenPos;
-            _tentakelRB.MovePosition(Vector2.MoveTowards(tentakelPos, targetPos, Time.deltaTime * tentakelSpeed));
+            var dist = Mouse.current.leftButton.isPressed ? 5.0f : 3f;
+            var speed = Mouse.current.leftButton.isPressed ? tentakelSpeed : tentakelSpeed / 3f;
+            if(d > dist)
+                targetPos = (targetPos - krakenPos).normalized * dist + krakenPos;
+            _tentakelRB.MovePosition(Vector2.MoveTowards(tentakelPos, targetPos, Time.deltaTime * speed));
+            var diff = (targetPos - krakenPos).normalized;
+            //diff = diff.x < 0 ? -diff : diff;
+            float rotZ = (Mathf.Atan2 (diff.y, diff.x) * Mathf.Rad2Deg);
+            _tentakelRB.MoveRotation (rotZ);
         } else {
             _tentakelRB.MovePosition(tentakelPos + deltaV * (tentakelSpeed * Time.deltaTime));
             if (deltaV.sqrMagnitude > 0) {

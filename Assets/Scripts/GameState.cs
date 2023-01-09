@@ -126,7 +126,7 @@ public class GameState : MonoBehaviour
         {
             if (CheckWinCondition())
             {
-                playerState = PlayerState.WIN;
+                Win();
                 musicManager.SetMusicProfile(MusicManager.MusicProfile.SILENCE);
             }
         }

@@ -65,6 +65,9 @@ public class VignetteMask : MonoBehaviour {
 
     public void PlayOutro() {
         mode = Mode.OUTRO;
+        var pos = transform.position;
+        pos.z = Camera.main.transform.position.z + 0.5f;
+        transform.position = pos;
         _transitionTimer = 0;
         vignetteSpriteRenderer.enabled = true;
         _spriteMask.enabled = true;
