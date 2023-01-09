@@ -117,9 +117,8 @@ public class GameState : MonoBehaviour
         {
             if (objectiveTarget > 0)
             {
-                if (objectiveCurrent >= objectiveTarget)
-                {
-                    playerState = PlayerState.WIN;
+                if (objectiveCurrent >= objectiveTarget) {
+                    Win();
                 }
             }
         }
